@@ -1,0 +1,96 @@
+{
+    "section": {
+        "date": "2020-07-01T00:34:57.000Z",
+        "time": "02:08"
+    },
+    "experience": 1831630,
+    "loot": 218654,
+    "supplies": 184742,
+    "balance": 33912,
+    "damage": 1086876,
+    "healing": 288341,
+    "killed": [
+        {
+            "total": 2,
+            "monster": "death blob"
+        },
+        {
+            "total": 1,
+            "monster": "killer caiman"
+        },
+        {
+            "total": 332,
+            "monster": "lizard chosen"
+        },
+        {
+            "total": 3,
+            "monster": "mutated bat"
+        },
+        {
+            "total": 1,
+            "monster": "mutated tiger"
+        }
+    ],
+    "looted": [
+        {
+            "total": 48,
+            "looted": "great health potion"
+        },
+        {
+            "total": 34,
+            "looted": "small diamond"
+        },
+        {
+            "total": 29844,
+            "looted": "gold coin"
+        },
+        {
+            "total": 33,
+            "looted": "platinum coin"
+        },
+        {
+            "total": 4,
+            "looted": "tower shield"
+        },
+        {
+            "total": 10,
+            "looted": "lizard leather"
+        },
+        {
+            "total": 4,
+            "looted": "lizard scale"
+        },
+        {
+            "total": 1,
+            "looted": "striped fur"
+        },
+        {
+            "total": 6,
+            "looted": "Zaoan armor"
+        },
+        {
+            "total": 2,
+            "looted": "Zaoan shoes"
+        },
+        {
+            "total": 1,
+            "looted": "Zaoan legs"
+        },
+        {
+            "total": 44,
+            "looted": "spiked iron ball"
+        },
+        {
+            "total": 12,
+            "looted": "corrupted flag"
+        },
+        {
+            "total": 27,
+            "looted": "cursed shoulder spikes"
+        },
+        {
+            "total": 10,
+            "looted": "scale of corruption"
+        }
+    ]
+}
