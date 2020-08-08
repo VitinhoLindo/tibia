@@ -48,6 +48,31 @@
             </div>
           </div>
         </div>
+
+        <div v-if="data.npcs">
+          <div v-for="(npc, index) in data.npcs" v-bind:key="index">
+            <div class="image flex">
+              <img class="tag" v-bind:src="npc.profile.data" v-bind:alt="npc.profile.alt">
+            </div>
+            <div style="text-align: center;">
+              <div>{{ `Name: ${npc.name}` }}</div>
+              <div>{{ `Inf: ${npc.information || '...'}` }}</div>
+            </div>
+
+            <div class="table-iten">
+              <div class="name-line">Name</div>
+              <div class="price-line">Price</div>
+              <div class="value-line">Value</div>
+            </div>
+            <div class="table-iten" v-for="(item, index) in npc.buy" v-bind:key="index">
+              <div class="name-line">{{ item.name }}</div>
+              <div class="price-line">{{ item.price }}</div>
+              <div class="value-line">{{ item.price * item.total }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-space"></div>
       </div>
     </div>
   </div>
@@ -122,6 +147,38 @@ export default {
 </script>
 
 <style>
+.bottom-space {
+  width: 100%;
+  height: 50px;
+}
+.image {
+  width: 100%;
+}
+.image .tag {
+  margin: auto;
+}
+
+.table-iten:nth-child(even) {background-color: #718093;}
+
+.name-line {
+  text-align: center;
+  width: 225px;
+}
+
+.price-line {
+  text-align: center;
+  width: 50px;
+}
+
+.value-line {
+  text-align: center;
+  width: 90px;
+}
+
+.table-iten {
+  display: flex;
+}
+
 .time {
   margin: 20px auto;
 }

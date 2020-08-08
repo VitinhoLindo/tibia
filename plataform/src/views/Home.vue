@@ -12,6 +12,10 @@
       v-bind:data="section.data"
       v-bind:closeSection="closeSection"
     />
+
+    <app-loading 
+      v-if="loading"
+    />
   </div>
 </template>
 
@@ -19,6 +23,7 @@
 import Axios from 'axios';
 import SectionLine from '../components/SectionLine';
 import SectionModal from '../components/SectionModal';
+import Loading from '../components/Loading';
 
 export default {
   name: 'Home',
@@ -33,23 +38,29 @@ export default {
   },
   components: {
     SectionLine,
-    SectionModal
+    SectionModal,
+    AppLoading: Loading
   },
   data: () => ({
     sections: [],
     section: {
       on: false,
       data: null
-    }
+    },
+    loading: false
   }),
   methods: {
     async getSections() {
-      let { data } = await Axios({
-        url: `${this.shared.path}/section`,
-        method: 'GET'
-      });
+      this.loading = true;
+      try {
+        let { data } = await Axios({
+          url: `${this.shared.path}/section`,
+          method: 'GET'
+        });
 
-      this.sections = data;
+        this.sections = data;
+      } catch (error) { }
+      this.loading = false;
     },
     setSectionData(value) {
       this.section.data = value;

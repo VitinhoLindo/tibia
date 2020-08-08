@@ -40,10 +40,10 @@ module.exports = (server = express(), app = new App('')) => {
   }
 
   const middleware = async (_request = request, _response = response, next) => {
-    _response.setHeader('Access-Control-Allow-Origin', '*');
-    _response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    _response.setHeader('Access-Control-Allow-Headers', '*');
-    _response.setHeader('Access-Control-Allow-Credentials', false);
+    // _response.setHeader('Access-Control-Allow-Origin', '*');
+    // _response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    // _response.setHeader('Access-Control-Allow-Headers', '*');
+    // _response.setHeader('Access-Control-Allow-Credentials', false);
 
     if (openToRequest()) {
       _response.status(200);

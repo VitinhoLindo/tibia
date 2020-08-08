@@ -19,17 +19,26 @@ class Repository extends MyEvent {
         this.plataform = this.os.platform();
 
         switch (this.plataform) {
+            case 'android':
             case 'linux':
                 this.repositorys = {
+                    dir: '/',
                     config: {
                         dir: '/config.json'
+                    },
+                    npcs: {
+                        dir: '/database/npcs'
                     }
                 };
                 break;
             case 'windows':
                 this.repositorys = {
+                    dir: '\\',
                     config: {
                         dir: '\\config.json'
+                    },
+                    npcs: {
+                        dir: '\\database\\npcs'
                     }
                 };
                 break;

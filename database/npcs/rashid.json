@@ -1,12 +1,797 @@
 {
-    "name": "rashid",
-    "profile": "",
+    "name": "Rashid",
+    "profile": {
+        "data": "data:image/gif;base64, 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",
+        "alt": "rashid image gif" 
+    },
     "buy": [
-        {"demon shield": 30000},
-        {"mastermind shield": 50000},
-        {"plate shield": 50},
-        {"demon sword": 15000},
-        {"great shield": 100000},
-        {"golden boots": 300000}
+        {
+            "name": "Abyss Hammer",
+            "price": 20000
+        },
+        {
+            "name": "Albino Plate",
+            "price": 1500
+        },
+        {
+            "name": "Amber Staff",
+            "price": 8000
+        },
+        {
+            "name": "Ancient Amulet",
+            "price": 200
+        },
+        {
+            "name": "Assassin Dagger",
+            "price": 20000
+        },
+        {
+            "name": "Bandana",
+            "price": 150
+        },
+        {
+            "name": "Beastslayer Axe",
+            "price": 1500
+        },
+        {
+            "name": "Beetle Necklace",
+            "price": 1500
+        },
+        {
+            "name": "Berserker",
+            "price": 40000
+        },
+        {
+            "name": "Blacksteel Sword",
+            "price": 6000
+        },
+        {
+            "name": "Blessed Sceptre",
+            "price": 40000
+        },
+        {
+            "name": "Bone Shield",
+            "price": 80
+        },
+        {
+            "name": "Bonelord Helmet",
+            "price": 7500
+        },
+        {
+            "name": "Brutetamer's Staff",
+            "price": 1500
+        },
+        {
+            "name": "Buckle",
+            "price": 7000
+        },
+        {
+            "name": "Castle Shield",
+            "price": 5000
+        },
+        {
+            "name": "Chain Bolter",
+            "price": 40000
+        },
+        {
+            "name": "Chaos Mace",
+            "price": 9000
+        },
+        {
+            "name": "Cobra Crown",
+            "price": 50000
+        },
+        {
+            "name": "Coconut Shoes",
+            "price": 500
+        },
+        {
+            "name": "Composite Hornbow",
+            "price": 25000
+        },
+        {
+            "name": "Cranial Basher",
+            "price": 30000
+        },
+        {
+            "name": "Crocodile Boots",
+            "price": 1000
+        },
+        {
+            "name": "Crystal Crossbow",
+            "price": 35000
+        },
+        {
+            "name": "Crystal Mace",
+            "price": 12000
+        },
+        {
+            "name": "Crystal Necklace",
+            "price": 400
+        },
+        {
+            "name": "Crystal Ring",
+            "price": 250
+        },
+        {
+            "name": "Crystal Sword",
+            "price": 600
+        },
+        {
+            "name": "Crystalline Armor",
+            "price": 16000
+        },
+        {
+            "name": "Daramian Mace",
+            "price": 110
+        },
+        {
+            "name": "Daramian Waraxe",
+            "price": 1000
+        },
+        {
+            "name": "Dark Shield",
+            "price": 400
+        },
+        {
+            "name": "Death Ring",
+            "price": 1000
+        },
+        {
+            "name": "Demon Shield",
+            "price": 30000
+        },
+        {
+            "name": "Demonbone Amulet",
+            "price": 32000
+        },
+        {
+            "name": "Demonrage Sword",
+            "price": 36000
+        },
+        {
+            "name": "Devil Helmet",
+            "price": 1000
+        },
+        {
+            "name": "Diamond Sceptre",
+            "price": 3000
+        },
+        {
+            "name": "Divine Plate",
+            "price": 55000
+        },
+        {
+            "name": "Djinn Blade",
+            "price": 15000
+        },
+        {
+            "name": "Doll",
+            "price": 200
+        },
+        {
+            "name": "Dragon Scale Mail",
+            "price": 40000
+        },
+        {
+            "name": "Dragon Slayer",
+            "price": 15000
+        },
+        {
+            "name": "Dragonbone Staff",
+            "price": 3000
+        },
+        {
+            "name": "Dreaded Cleaver",
+            "price": 10000
+        },
+        {
+            "name": "Dwarven Armor",
+            "price": 30000
+        },
+        {
+            "name": "Earth Blacksteel Sword",
+            "price": 6000
+        },
+        {
+            "name": "Earth Cranial Basher",
+            "price": 30000
+        },
+        {
+            "name": "Earth Crystal Mace",
+            "price": 12000
+        },
+        {
+            "name": "Earth Dragon Slayer",
+            "price": 15000
+        },
+        {
+            "name": "Earth Headchopper",
+            "price": 6000
+        },
+        {
+            "name": "Earth Heroic Axe",
+            "price": 30000
+        },
+        {
+            "name": "Earth Mystic Blade",
+            "price": 30000
+        },
+        {
+            "name": "Earth Orcish Maul",
+            "price": 6000
+        },
+        {
+            "name": "Earth Relic Sword",
+            "price": 25000
+        },
+        {
+            "name": "Earth War Axe",
+            "price": 12000
+        },
+        {
+            "name": "Elvish Bow",
+            "price": 2000
+        },
+        {
+            "name": "Emerald Bangle",
+            "price": 800
+        },
+        {
+            "name": "Energy Blacksteel Sword",
+            "price": 6000
+        },
+        {
+            "name": "Energy Cranial Basher",
+            "price": 30000
+        },
+        {
+            "name": "Energy Crystal Mace",
+            "price": 12000
+        },
+        {
+            "name": "Energy Dragon Slayer",
+            "price": 15000
+        },
+        {
+            "name": "Energy Headchopper",
+            "price": 6000
+        },
+        {
+            "name": "Energy Heroic Axe",
+            "price": 30000
+        },
+        {
+            "name": "Energy Mystic Blade",
+            "price": 30000
+        },
+        {
+            "name": "Energy Orcish Maul",
+            "price": 6000
+        },
+        {
+            "name": "Energy Relic Sword",
+            "price": 25000
+        },
+        {
+            "name": "Energy War Axe",
+            "price": 12000
+        },
+        {
+            "name": "Epee",
+            "price": 8000
+        },
+        {
+            "name": "Fiery Blacksteel Sword",
+            "price": 6000
+        },
+        {
+            "name": "Fiery Cranial Basher",
+            "price": 30000
+        },
+        {
+            "name": "Fiery Crystal Mace",
+            "price": 12000
+        },
+        {
+            "name": "Fiery Dragon Slayer",
+            "price": 15000
+        },
+        {
+            "name": "Fiery Headchopper",
+            "price": 6000
+        },
+        {
+            "name": "Fiery Heroic Axe",
+            "price": 30000
+        },
+        {
+            "name": "Fiery Mystic Blade",
+            "price": 30000
+        },
+        {
+            "name": "Fiery Orcish Maul",
+            "price": 6000
+        },
+        {
+            "name": "Fiery Relic Sword",
+            "price": 25000
+        },
+        {
+            "name": "Fiery War Axe",
+            "price": 12000
+        },
+        {
+            "name": "Flower Dress",
+            "price": 1000
+        },
+        {
+            "name": "Flower Wreath",
+            "price": 500
+        },
+        {
+            "name": "Fur Boots",
+            "price": 2000
+        },
+        {
+            "name": "Furry Club",
+            "price": 1000
+        },
+        {
+            "name": "Glacier Amulet",
+            "price": 1500
+        },
+        {
+            "name": "Glacier Kilt",
+            "price": 11000
+        },
+        {
+            "name": "Glacier Mask",
+            "price": 2500
+        },
+        {
+            "name": "Glacier Robe",
+            "price": 11000
+        },
+        {
+            "name": "Glacier Shoes",
+            "price": 2500
+        },
+        {
+            "name": "Gold Ring",
+            "price": 8000
+        },
+        {
+            "name": "Golden Armor",
+            "price": 20000
+        },
+        {
+            "name": "Golden Legs",
+            "price": 30000
+        },
+        {
+            "name": "Goo Shell",
+            "price": 4000
+        },
+        {
+            "name": "Griffin Shield",
+            "price": 3000
+        },
+        {
+            "name": "Guardian Halberd",
+            "price": 11000
+        },
+        {
+            "name": "Hammer of Wrath",
+            "price": 30000
+        },
+        {
+            "name": "Headchopper",
+            "price": 6000
+        },
+        {
+            "name": "Heavy Mace",
+            "price": 50000
+        },
+        {
+            "name": "Heavy Machete",
+            "price": 90
+        },
+        {
+            "name": "Heavy Trident",
+            "price": 2000
+        },
+        {
+            "name": "Helmet of The Lost",
+            "price": 2000
+        },
+        {
+            "name": "Heroic Axe",
+            "price": 30000
+        },
+        {
+            "name": "Hibiscus Dress",
+            "price": 3000
+        },
+        {
+            "name": "Hieroglyph Banner",
+            "price": 500
+        },
+        {
+            "name": "Horn (Ring)",
+            "price": 300
+        },
+        {
+            "name": "Icy Blacksteel Sword",
+            "price": 6000
+        },
+        {
+            "name": "Icy Cranial Basher",
+            "price": 30000
+        },
+        {
+            "name": "Icy Crystal Mace",
+            "price": 12000
+        },
+        {
+            "name": "Icy Dragon Slayer",
+            "price": 15000
+        },
+        {
+            "name": "Icy Headchopper",
+            "price": 6000
+        },
+        {
+            "name": "Icy Heroic Axe",
+            "price": 30000
+        },
+        {
+            "name": "Icy Mystic Blade",
+            "price": 30000
+        },
+        {
+            "name": "Icy Orcish Maul",
+            "price": 6000
+        },
+        {
+            "name": "Icy Relic Sword",
+            "price": 25000
+        },
+        {
+            "name": "Icy War Axe",
+            "price": 12000
+        },
+        {
+            "name": "Jade Hammer",
+            "price": 25000
+        },
+        {
+            "name": "Krimhorn Helmet",
+            "price": 200
+        },
+        {
+            "name": "Lavos Armor",
+            "price": 16000
+        },
+        {
+            "name": "Leaf Legs",
+            "price": 500
+        },
+        {
+            "name": "Leopard Armor",
+            "price": 1000
+        },
+        {
+            "name": "Leviathan's Amulet",
+            "price": 3000
+        },
+        {
+            "name": "Light Shovel",
+            "price": 300
+        },
+        {
+            "name": "Lightning Boots",
+            "price": 2500
+        },
+        {
+            "name": "Lightning Headband",
+            "price": 2500
+        },
+        {
+            "name": "Lightning Legs",
+            "price": 11000
+        },
+        {
+            "name": "Lightning Pendant",
+            "price": 1500
+        },
+        {
+            "name": "Lightning Robe",
+            "price": 11000
+        },
+        {
+            "name": "Lunar Staff",
+            "price": 5000
+        },
+        {
+            "name": "Magic Plate Armor",
+            "price": 90000
+        },
+        {
+            "name": "Magma Amulet",
+            "price": 1500
+        },
+        {
+            "name": "Magma Boots",
+            "price": 2500
+        },
+        {
+            "name": "Magma Coat",
+            "price": 11000
+        },
+        {
+            "name": "Magma Legs",
+            "price": 11000
+        },
+        {
+            "name": "Magma Monocle",
+            "price": 2500
+        },
+        {
+            "name": "Mammoth Fur Cape",
+            "price": 6000
+        },
+        {
+            "name": "Mammoth Fur Shorts",
+            "price": 850
+        },
+        {
+            "name": "Mammoth Whopper",
+            "price": 300
+        },
+        {
+            "name": "Mastermind Shield",
+            "price": 50000
+        },
+        {
+            "name": "Medusa Shield",
+            "price": 9000
+        },
+        {
+            "name": "Mercenary Sword",
+            "price": 12000
+        },
+        {
+            "name": "Model Ship",
+            "price": 1000
+        },
+        {
+            "name": "Mycological Bow",
+            "price": 35000
+        },
+        {
+            "name": "Mystic Blade",
+            "price": 30000
+        },
+        {
+            "name": "Naginata",
+            "price": 2000
+        },
+        {
+            "name": "Nightmare Blade",
+            "price": 35000
+        },
+        {
+            "name": "Noble Axe",
+            "price": 10000
+        },
+        {
+            "name": "Norse Shield",
+            "price": 1500
+        },
+        {
+            "name": "Onyx Pendant",
+            "price": 3500
+        },
+        {
+            "name": "Orcish Maul",
+            "price": 6000
+        },
+        {
+            "name": "Oriental Shoes",
+            "price": 15000
+        },
+        {
+            "name": "Pair of Iron Fists",
+            "price": 4000
+        },
+        {
+            "name": "Paladin Armor",
+            "price": 15000
+        },
+        {
+            "name": "Patched Boots",
+            "price": 2000
+        },
+        {
+            "name": "Pharaoh Banner",
+            "price": 1000
+        },
+        {
+            "name": "Pharaoh Sword",
+            "price": 23000
+        },
+        {
+            "name": "Pirate Boots",
+            "price": 3000
+        },
+        {
+            "name": "Pirate Hat",
+            "price": 1000
+        },
+        {
+            "name": "Pirate Knee Breeches",
+            "price": 200
+        },
+        {
+            "name": "Pirate Shirt",
+            "price": 500
+        },
+        {
+            "name": "Pirate Voodoo Doll",
+            "price": 500
+        },
+        {
+            "name": "Platinum Amulet",
+            "price": 2500
+        },
+        {
+            "name": "Ragnir Helmet",
+            "price": 400
+        },
+        {
+            "name": "Relic Sword",
+            "price": 25000
+        },
+        {
+            "name": "Rift Bow",
+            "price": 45000
+        },
+        {
+            "name": "Rift Crossbow",
+            "price": 45000
+        },
+        {
+            "name": "Rift Lance",
+            "price": 30000
+        },
+        {
+            "name": "Rift Shield",
+            "price": 50000
+        },
+        {
+            "name": "Ring of the Sky",
+            "price": 30000
+        },
+        {
+            "name": "Royal Axe",
+            "price": 40000
+        },
+        {
+            "name": "Ruby Necklace",
+            "price": 2000
+        },
+        {
+            "name": "Ruthless Axe",
+            "price": 45000
+        },
+        {
+            "name": "Sacred Tree Amulet",
+            "price": 3000
+        },
+        {
+            "name": "Sapphire Hammer",
+            "price": 7000
+        },
+        {
+            "name": "Scarab Amulet",
+            "price": 200
+        },
+        {
+            "name": "Scarab Shield",
+            "price": 2000
+        },
+        {
+            "name": "Shockwave Amulet",
+            "price": 3000
+        },
+        {
+            "name": "Silver Brooch",
+            "price": 150
+        },
+        {
+            "name": "Silver Dagger",
+            "price": 500
+        },
+        {
+            "name": "Skull Helmet",
+            "price": 40000
+        },
+        {
+            "name": "Skullcracker Armor",
+            "price": 18000
+        },
+        {
+            "name": "Spiked Squelcher",
+            "price": 5000
+        },
+        {
+            "name": "Steel Boots",
+            "price": 30000
+        },
+        {
+            "name": "Swamplair Armor",
+            "price": 16000
+        },
+        {
+            "name": "Taurus Mace",
+            "price": 500
+        },
+        {
+            "name": "Tempest Shield",
+            "price": 35000
+        },
+        {
+            "name": "Terra Amulet",
+            "price": 1500
+        },
+        {
+            "name": "Terra Boots",
+            "price": 2500
+        },
+        {
+            "name": "Terra Hood",
+            "price": 2500
+        },
+        {
+            "name": "Terra Legs",
+            "price": 11000
+        },
+        {
+            "name": "Terra Mantle",
+            "price": 11000
+        },
+        {
+            "name": "The Justice Seeker",
+            "price": 40000
+        },
+        {
+            "name": "Tortoise Shield",
+            "price": 150
+        },
+        {
+            "name": "Vile Axe",
+            "price": 30000
+        },
+        {
+            "name": "Voodoo Doll",
+            "price": 400
+        },
+        {
+            "name": "War Axe",
+            "price": 12000
+        },
+        {
+            "name": "War Horn",
+            "price": 8000
+        },
+        {
+            "name": "Witch Hat",
+            "price": 5000
+        },
+        {
+            "name": "Wyvern Fang",
+            "price": 1500
+        }
     ]
 }
