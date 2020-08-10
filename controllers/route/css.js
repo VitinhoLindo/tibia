@@ -1,11 +1,9 @@
 const { Router } = require('express');
 const route      = Router();
+const CssController = require('../CssController');
 
 route.get('/:file', (request, response) => {
-  response.sendFile(`${request.__dirname}/public/css/${request.params.file}`, (err) => {
-    response.status(404);
-    response.end();
-  });
+  (new CssController(request, response))._send();
 });
 
 module.exports = route;

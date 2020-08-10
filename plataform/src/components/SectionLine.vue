@@ -1,13 +1,15 @@
 <template>
   <div class="section-line" v-on:click="lineClick">
-    <div class="section-time">{{ getDate() }}</div>
-    <div class="section-info">
-      <div>{{ getExperience() }}</div>
-      <div>{{ getBalance() }}</div>
-      <div>{{ getSupplies() }}</div>
-      <div>{{ getLoot() }}</div>
-      <div>{{ getHealing() }}</div>
-      <div>{{ getHour() }}</div>
+    <div class="content">
+      <div class="section-time">{{ getDate() }}</div>
+      <div class="section-info">
+        <div>{{ getExperience() }}</div>
+        <div>{{ getBalance() }}</div>
+        <div>{{ getSupplies() }}</div>
+        <div>{{ getLoot() }}</div>
+        <div>{{ getHealing() }}</div>
+        <div>{{ getHour() }}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -56,41 +58,25 @@ export default {
 </script>
 
 <style>
-  @media screen and (max-width: 500px) {
-    .section-line {
-      width: 500px;
-      height: 105px;
-      padding: 5px 20px;
-      margin: 2.5px auto 2.5px auto;
-      cursor: pointer;
-      background-color: #718093;
-    }
-    .section-info {
-      margin-left: 10px;
-      font-size: 12px;
-      color: #ffffff;
-    }
-  }
-
-  @media screen and (min-width: 501px) {
-    .section-line {
-      width: 240px;
-      height: 135px;
-      padding: 5px 20px;
-      margin: 2.5px auto 2.5px auto;
-      cursor: pointer;
-      background-color: #718093;
-    }
-    .section-line:hover {
-      opacity: 0.2;
-    }
-    .section-time {
-      font-size: 20px;
-    }
-    .section-info {
-      margin-left: 10px;
-      font-size: 16px;
-      color: #ffffff;
-    }
-  }
+.section-line {
+  width: 250px;
+  height: 150px;
+  margin: 2.5px 2.5px 2.5px 2.5px;
+  cursor: pointer;
+  background-color: #718093;
+}
+.section-line .content {
+  margin: 10px;
+}
+.section-line:hover {
+  opacity: 0.2;
+}
+.section-time {
+  font-size: 20px;
+}
+.section-info {
+  margin-left: 10px;
+  font-size: 16px;
+  color: #ffffff;
+}
 </style>

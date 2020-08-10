@@ -9,7 +9,7 @@ export default {
   name: 'App',
   data: () => ({
     shared: {
-      path: 'http://10.0.0.108:3000'
+      //  path: 'http://10.0.0.108:3000'
     }
   }),
 }

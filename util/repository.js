@@ -10,9 +10,34 @@ class Repository extends MyEvent {
     plataform   = '';
     dirname     = '';
     repositorys = {};
+    listenTime      = 5000;
 
     constructor() {
         super();
+    }
+
+    cssRepository(file) {
+        return `${this.dirname}${this.repositorys.css.dir}${file}`;
+    }
+
+    jsRepository(file) {
+        return `${this.dirname}${this.repositorys.js.dir}${file}`;
+    }
+
+    htmlRepository(file) {
+        return `${this.dirname}${this.repositorys.html.dir}${file}`;
+    }
+
+    icoRepository(file) {
+        return `${this.dirname}${this.repositorys.ico.dir}${file}`;
+    }
+
+    npcRepository() {
+        return `${this.dirname}${this.repositorys.npcs.dir}${this.repositorys.dir}`;
+    }
+    
+    npcRepositoryAndFile() {
+        return `${this.dirname}${this.repositorys.npcs.dir}${this.repositorys.dir}${this.repositorys.npcs.file}`;
     }
 
     setPlataformSetings() {
@@ -27,7 +52,24 @@ class Repository extends MyEvent {
                         dir: '/config.json'
                     },
                     npcs: {
-                        dir: '/database/npcs'
+                        dir: '/database/npcs',
+                        file: '@name@.json'
+                    },
+                    section: {
+                        dir: '/database/sections',
+                        file: '@date@.json'
+                    },
+                    css: {
+                        dir: '/public/css/'
+                    },
+                    js: {
+                        dir: '/public/js/'
+                    },
+                    html: {
+                        dir: '/public/html/'
+                    },
+                    ico: {
+                        dir: '/public/ico/'
                     }
                 };
                 break;
@@ -38,7 +80,24 @@ class Repository extends MyEvent {
                         dir: '\\config.json'
                     },
                     npcs: {
-                        dir: '\\database\\npcs'
+                        dir: '\\database\\npcs',
+                        file: '@name@.json'
+                    },
+                    section: {
+                        dir: '\\database\\sections',
+                        file: '@date@.json'
+                    },
+                    css: {
+                        dir: '\\public\\css\\'
+                    },
+                    js: {
+                        dir: '\\public\\js\\'
+                    },
+                    html: {
+                        dir: '\\public\\html\\'
+                    },
+                    ico: {
+                        dir: '\\public\\ico\\'
                     }
                 };
                 break;

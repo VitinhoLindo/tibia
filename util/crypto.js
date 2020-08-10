@@ -1,6 +1,6 @@
-const Util = require('./util');
+const ReadSection = require('./readSection');
 
-class Crypto extends Util {
+class Crypto extends ReadSection {
     secretLen = 100;
 
     constructor() {

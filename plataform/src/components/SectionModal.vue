@@ -1,6 +1,7 @@
 <template>
   <div class="section-modal" v-on:click="close">
     <div class="content">
+      <div class="show-information" v-on:click="closeSection">back</div>
       <div class="time">
         <div>{{ getHour() }}</div>
         <div>{{ getFinalHour() }}</div>
@@ -210,6 +211,9 @@ export default {
 .show-information:hover {
   opacity: 0.7;
 }
+.show-information {
+  margin: 5px 0px;
+}
 .informations {
   font: italic;
   font-size: 14px;
@@ -232,7 +236,7 @@ export default {
   cursor: pointer;
 }
 
-.content {
+.section-modal .content {
   width: 350px;
   height: 100%;
   border: 1px solid #888888;
