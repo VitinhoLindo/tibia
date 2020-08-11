@@ -7,6 +7,7 @@ class App extends Config {
         super();
         this.dirname = _dirname;
         this.on('print', this.print);
+        this.on('close-server', this.closeServer);
     }
 
     print(opt = [{ message: '', color: '' }]) {
@@ -18,6 +19,11 @@ class App extends Config {
         });
 
         console.log(message);
+    }
+
+    async closeServer(opt) {
+        this.print(opt);
+        this.process.exit();
     }
 
     async listen() {

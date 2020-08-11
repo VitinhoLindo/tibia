@@ -55,6 +55,15 @@ class Util extends Repository {
     
         return _controller.data;
     }
+
+    sleep(time) {
+        time = (parseFloat(time) || 1) * 1000;
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(true);
+            }, time);
+        });
+    }
 }
 
 module.exports = Util;

@@ -102,8 +102,7 @@ class Repository extends MyEvent {
                 };
                 break;
             default:
-                this.emit('print', { message: 'plataform not supported', color: 'red' });
-                this.emit('close-server');
+                this.emit('close-server', [{ message: 'plataform not supported', color: 'red' }]);
                 break;
         }
     }
