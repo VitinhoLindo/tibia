@@ -206,6 +206,28 @@ class ReadSection extends NpcSection {
       len++;
     }
 
+    while(true) {
+      var normalized = true, index = 0;
+
+      while(true) {
+        let section  = sections[index];
+        let _section = sections[index + 1]; 
+
+        if (_section == undefined) break;
+        if (new Date(section.section.date) < new Date(_section.section.date)) {
+          let _section_ = Object.assign({}, section);
+          sections[index]     = _section;
+          sections[index + 1] = _section_;
+          normalized = false;
+          break;
+        }
+
+        index++;
+      }
+
+      if (normalized) break;
+    }
+
     return sections;
   }
 
