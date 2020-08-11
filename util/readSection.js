@@ -209,48 +209,60 @@ class ReadSection extends NpcSection {
     return sections;
   }
 
+  getSellIten(buy = [], looted = []) {
+    var itens = [];
 
-  async getLocaleSellItem(sections, npcs) {
-    let sectionsLen = 0;
+    var buyLen = 0, buyItens;
     while(true) {
-        let section = sections[sectionsLen];
-        if (!section) break;
+      buyItens = buy[buyLen];
 
-        let npcsLen = 0;
-        while(true) {
-            let npc   = npcs[npcsLen];
-            let itens = [];
-            if (!npc) break;
+      if (buyItens == undefined) break;
+      var lootedLen = 0, lootedIten;
+      while(true) {
+        lootedIten = looted[lootedLen];
 
-            let lenItens = 0;
-            while(true) {
-                let item = section.looted[lenItens];
-                if (!item) break;
+        if (lootedIten == undefined) break;
+        if (buyItens.name.toLowerCase().replace(' ', '') == lootedIten.looted.toLowerCase().replace(' ', ''))
+          itens.push({ name: buyItens.name, price: buyItens.price, total: lootedIten.total });
 
-                let lenNpcItens = 0;
-                while(true) {
-                    let itenNpc = npc.buy[lenNpcItens];
-                    if (!itenNpc) break;
+        lootedLen++;
+      }
 
-                    if (itenNpc.name.toUpperCase().replace(/\s/g, '') == item.looted.toUpperCase().replace(/\s/g, '')) {
-                      itens.push({ name: itenNpc.name, price: itenNpc.price, total: item.total });
-                    }
-                    lenNpcItens++;
-                }
-                lenItens++;
-            }
+      buyLen++;
+    }
 
-            if (itens.length) {
-                delete npc.buy;
 
-                if (!section.npcs) section.npcs = [];
-                npc.buy = itens;
-                section.npcs.push(npc);
-            }
+    return {
+      itens: itens
+    }
+  }
 
-            npcsLen++;
+  async getLocaleSellItem(sections = [], npcs = []) {
+
+    var npcsLen = 0, npc;
+    while(true) {
+      npc = npcs[npcsLen];
+
+      if (npc == undefined) break;
+      var sectionLen = 0, section;
+      while(true) {
+        section = sections[sectionLen];
+
+        if (section == undefined) break;
+        let result = this.getSellIten(npc.buy, section.looted);
+
+        if (result.itens.length) {
+          if (section.npcs == undefined) section.npcs = [];
+          let _npc = Object.assign({}, npc);
+          _npc.buy = result.itens;
+          section.npcs.push(_npc);
         }
-        sectionsLen++;
+
+        sections[sectionLen] = section;
+        sectionLen++;
+      }
+
+      npcsLen++;
     }
 
     return sections;
