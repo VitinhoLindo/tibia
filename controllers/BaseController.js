@@ -10,7 +10,7 @@ class ResponseModel {
     code           = 0;
     status         = '';
 
-    constructor() {}
+    constructor() { }
 }
 
 const currentTime = function() {

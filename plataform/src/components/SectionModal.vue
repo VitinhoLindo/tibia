@@ -51,7 +51,7 @@
         </div>
 
         <div v-if="data.npcs">
-          <div v-for="(npc, index) in data.npcs" v-bind:key="index">
+          <div class="npcs" v-for="(npc, index) in data.npcs" v-bind:key="index">
             <div class="image flex">
               <img class="tag" v-bind:src="npc.profile.data" v-bind:alt="npc.profile.alt">
             </div>
@@ -67,8 +67,8 @@
             </div>
             <div class="table-iten" v-for="(item, index) in npc.buy" v-bind:key="index">
               <div class="name-line">{{ item.name }}</div>
-              <div class="price-line">{{ item.price }}</div>
-              <div class="value-line">{{ item.price * item.total }}</div>
+              <div class="price-line">{{ getNumber(item.price) }}</div>
+              <div class="value-line">{{ getNumber(item.price * item.total) }}</div>
             </div>
           </div>
         </div>
@@ -88,6 +88,10 @@ export default {
       required: true
     },
     closeSection: {
+      type: Function,
+      required: true
+    },
+    getNumber: {
       type: Function,
       required: true
     }
@@ -126,19 +130,19 @@ export default {
       return `Hunting end time: ${_date.toLocaleString()}`;
     },
     getExperience() {
-      return `Experiencia: ${this.data.experience}`;
+      return `Experiencia: ${this.getNumber(this.data.experience, '.')}`;
     },
     getLoot() {
-      return `Loot: ${this.data.loot}`;
+      return `Loot: ${this.getNumber(this.data.loot)}`;
     },
     getSupplies() {
-      return `Supplie: ${this.data.supplies}`;
+      return `Supplie: ${this.getNumber(this.data.supplies)}`;
     },
     getBalance() {
-      return `Balance: ${this.data.loot - this.data.supplies}`;
+      return `Balance: ${this.getNumber(this.data.loot - this.data.supplies)}`;
     },
     getHealing() {
-      return `Healing: ${this.data.healing}`;
+      return `Healing: ${this.getNumber(this.data.healing, '.')}`;
     },
     getMonsterLabel(info) {
       return `${info.total}x ${info.monster}`;

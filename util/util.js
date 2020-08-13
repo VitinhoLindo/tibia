@@ -1,4 +1,5 @@
 const Repository = require('./repository');
+const { response } = require('express');
 
 class Util extends Repository {
     constructor() {
@@ -36,6 +37,20 @@ class Util extends Repository {
         if (!colorObj[color]) color = 'white';
 
         return colorObj[color];
+    }
+
+    convertMinuteToHour(_minute = 0) {
+        let hour   = Math.floor(_minute / 60);
+        let minute = _minute % 60;
+
+        if (minute > 59) {
+            let result = this.convertMinuteToHour(minute);
+
+            hour   += result.hour;
+            minute  = result.minute;
+        }
+
+        return { hour, minute };
     }
 
     getIntergerInString(value = '') {

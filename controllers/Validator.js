@@ -29,21 +29,28 @@ class Validator {
     static validate(data, rules = undefined | []) {
         for (let x = 0, rule; rule = rules[x]; x++) {
             if (rule == 'required'    && data == undefined)        return { failed: true, rule: rule };
-            if (rule == 'string'      && typeof data !== 'string') return { failed: true, rule: rule, ruleMessage: `not string` };
-            if (rule == 'array') 
+            else if (rule == 'string'      && typeof data !== 'string') return { failed: true, rule: rule, ruleMessage: `not string` };
+            else if (rule == 'array') 
                 if (data == undefined)                             return  { failed: true, rule: rule };
                 else if (data.constructor.name != 'Array')         return  { failed: true, rule: rule };
-            if (/^min\:\d+$/.test(rule)) 
+            else if (/^min\:\d+$/.test(rule)) 
                 if (data) {
                     let exec = /\d*/g.exec(rules);
                     if (data.length == undefined)                  return { failed: true, rule: rule, ruleMessage: `lower of min character '${exec[0]}'` };
                     if (exec        == null)                       return { failed: true, rule: rule, ruleMessage: `lower of min character '${exec[0]}'` };
                     if (data.length  < parseInt(exec[0]))          return { failed: true, rule: rule, ruleMessage: `lower of min character '${exec[0]}'` };
                 } else                                             return { failed: true, rule: rule };
-            if (rule == 'url-encode')
+            else if (rule == 'url-encode')
                 if (
                     /data\:image\/\w+\;base64\,\s/g.test(data) == false
                 )                                                  return { failed: true, rule: rule };
+            else if (rule == 'datetime')
+                if (data == undefined)                             return { failed: true, rule: rule };
+                else { 
+                    if (/\d+\-\d+-\d+T\d+:\d+:\d+\.\d+Z$/.test(data) == false) {
+                                                                   return { failed: true, rule: rule };
+                    }
+                }
         }
 
         return { failed: false };
@@ -70,12 +77,13 @@ class Validator {
 
         if (controller.failed) return new Validator(controller);
         for (let field in opt) {
-            let result     = this.validate(data[field], opt[field].split(/\|/g));
+            let result        = this.validate(data[field], opt[field].split(/\|/g));
             controller.failed = result.failed;
 
             if (controller.failed) {
                 controller.rule    = result.rule;
                 controller.message = this.errorMessage(field, result.rule, result.ruleMessage); 
+                break;
             }
         }
 

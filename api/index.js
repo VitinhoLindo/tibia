@@ -7,5 +7,7 @@ route.use('/ico',     require('../controllers/route/ico')        );
 route.use('/',        require('../controllers/route/html')       );
 route.use('/section', require('../controllers/route/section')    );
 route.use('/npc',     require('../controllers/route/npc')        );
+route.use('/monit',   require('../controllers/route/monit')      );
+
 
 module.exports = route;

@@ -107,6 +107,10 @@ export default {
     refresh: {
       type: Function,
       required: true
+    },
+    shared: {
+      type: Object,
+      required: true
     }
   },
   data() {
@@ -230,7 +234,6 @@ export default {
         var fileReader = new FileReader();
         fileReader.onload = (_file) => {
           this.input.profile.data = _file.target.result;
-          // console.log(this.input.profile.data);
         }
 
         fileReader.readAsDataURL(file);

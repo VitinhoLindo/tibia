@@ -40,10 +40,10 @@ module.exports = (server = express(), app = new App('')) => {
   }
 
   const middleware = async (_request = request, _response = response, next) => {
-    // _response.setHeader('Access-Control-Allow-Origin', '*');
-    // _response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    // _response.setHeader('Access-Control-Allow-Headers', '*');
-    // _response.setHeader('Access-Control-Allow-Credentials', false);
+    _response.setHeader('Access-Control-Allow-Origin', '*');
+    _response.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    _response.setHeader('Access-Control-Allow-Headers', '*');
+    _response.setHeader('Access-Control-Allow-Credentials', false);
 
     if (openToRequest()) {
       app.emit('print', [{ message: `too many requests:`, color: 'red' }, { message: `${_request.method.toLocaleUpperCase()}`, color: 'yellow' }, { message: `${_request.url}`, color: 'cyan' }]);
@@ -55,6 +55,7 @@ module.exports = (server = express(), app = new App('')) => {
     app.emit('print', [{ message: `new request in route:`, color: 'green' }, { message: `${_request.method.toLocaleUpperCase()}`, color: 'yellow' }, { message: `${_request.url}` }]);
 
     await body(_request, _response);
+
     _request.__dirname = app.dirname;
     _request.getApp    = getApp;
     next();

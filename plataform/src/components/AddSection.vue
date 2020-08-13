@@ -35,6 +35,10 @@ export default {
     loading: {
       type: Function,
       required: true
+    },
+    shared: {
+      type: Function,
+      required: true
     }
   },
   data() {

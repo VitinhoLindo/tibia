@@ -296,6 +296,97 @@ class ReadSection extends NpcSection {
 
     return await this.getLocaleSellItem(sections, npcs);
   }
+
+  async getMonit(arg = { initial : new Date(), final: new Date() }) {
+    let [sections, npcs] = await Promise.all([
+      this.getSectionStorageData(),
+      this.getNpcs()
+    ]);
+
+    var killed     = {},
+        looted     = {}, 
+        experience = 0,
+        loot       = 0,
+        supplies   = 0,
+        hour       = 0,
+        minute     = 0,
+        damage     = 0,
+        healing    = 0;
+
+    for (let index in sections) {
+      var data = sections[index];
+
+      if (new Date(data.section.date) >= arg.initial && new Date(data.section.date) <= arg.final) {
+        let [_hour, _minute] = data.section.time.split(/\:/g);
+
+        experience += parseInt(data.experience);
+        loot       += parseInt(data.loot);
+        supplies   += parseInt(data.supplies);
+        hour       += parseInt(_hour);
+        minute     += parseInt(_minute);
+        damage     += parseInt(data.damage);
+        healing    += parseInt(data.healing);
+
+        for (let _index in data.killed) {
+          let _data = data.killed[_index];
+
+          if (killed[_data.monster]) 
+            killed[_data.monster] += parseInt(_data.total);
+          else 
+            killed[_data.monster]  = parseInt(_data.total);
+        }
+
+        for (let _index in data.looted) {
+          let _data = data.looted[_index];
+
+          if (looted[_data.looted]) 
+            looted[_data.looted] += parseInt(_data.total);
+          else 
+            looted[_data.looted]  = parseInt(_data.total);
+        }
+      }
+    }
+
+    let result = this.convertMinuteToHour(minute);
+    hour   += result.hour;
+    minute = result.minute;
+
+    let _section = {
+      section: {
+        time: hour + ':' + minute
+      },
+      experience: experience,
+      loot: loot,
+      supplies: supplies,
+      damage: damage,
+      healing: healing,
+      killed: killed,
+      looted: looted
+    };
+
+    let _killed = [];
+    let _looted = [];
+
+    for (let _monster_ in _section.killed) {
+      _killed.push({
+        monster: _monster_,
+        total  : _section.killed[_monster_]
+      });
+    }
+
+    for (let _looted_ in _section.looted) {
+      _looted.push({
+        looted: _looted_,
+        total: _section.looted[_looted_]
+      });
+    }
+
+    _section.killed = _killed;
+    _section.looted = _looted;
+
+    _section = await this.getLocaleSellItem([_section], npcs);
+    return _section[0];
+  }
 }
 
 module.exports = ReadSection;

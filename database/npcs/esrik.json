@@ -1,1 +1,374 @@
-{"name":"Esrik","profile":{"data":"data:image/gif;base64,R0lGODlhHwAwANUAAP//AOXs9efn5//jv//fv+XZv/jEoe+/n+y/nrXG1v+shM2zba+vr5+hy82hR7+ff5+fn/+AwLuYhfh4SHaPswDDAJ9/T49/X4CAgIp+R2N+p39/P3Z+R49vP3Nxc4xuPGpqaohaLV9fX1Fcmsg4MG9PH2pMHVFMKTM9fYggEE8vDy8vL1AYCBogAC8PABAIAAQCBAABDAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQJMgAzACwAAAAAHwAwAAAG/8CZbEicGY/I41AoSwor0GjTiZRBrZWp8lpkLr9N4pVpxBLD0ex1rc6an+n2OW5mT81zKX7IHpf9f1J+dVJbbmCEd3aDcW1cjHJvXkVnZVpkS2RUm5ydnp+goaKjpKWmp6ipqqudlatDCiwkmagyCiSyEymzZ12gMiy5CsC3Zx0dtJwyE7gsKbspMikTxTIPx8lOwBPC0QgyvDIHBNfXl0m2LLqyLDIDQ8xDBwcP9cibQyQKukMSQ9FD7D0YZw4fOG8DPsAgMUEGChnYOgysd86SPxkIDHxjGGOEBiIrhkg8UFFIwwEIEi6D0bHBiIcrGEAAIbKkFwkfJkyAMaFjgtAEI2LOFCECQjYlEnjCWLozmoYAMkoMFeFBwNEyCJZiHMAUYAkLK4gWtWrTnUKG+khMi2pBRtix8kpi/AbuVryvQy6sgEAWGxUZEgL7YxgNr4wLF3pdFfIhJU4ihkMkRqGh8ojFQgQDftdWhgoTDisHAPqw1QfAjU/LADAEhccEFDS8tKlERmN/qh269mj5IW1LionsHjEbsxC8QigPWZBBNwrfMk78pqWYQ68W0X/j4+CggPQhJ5pLLxX9hPkwQziMJ99FBnfv2kOVP89q0owgACH5BAkyADMALAAAAAAfADAAAAb/wJlsSJwZj8jjUChLCivQaNOJlEGtlanyWmQuv03ilWnEEsPR7HWtzpqf6fY5bmZPzXMpfsgel/1/Un51UltuYIR3doNxbVyMcm9eRWdlWmRLZFSbnJ2en6ChoqOkpaanqKmqq52Vq0MKLCSZqDIKJLITKbNnl6AyLLkKwLe9vpwyE7gsKbspMikTxTIftMgsE8LPCDK8MggI1cdJttgpsiwyA0PKQwMIHR3jSt0KukMSQ89D4BIfEvJadds24AMMEhNkoJAhoaGEcPOY5PtmgBtCGCM0UPOH4F1AKsnUdaw2AQbGBiMWbuwXkYi/CSVLjkiQYASRfw0jGoFR0mTJymcaAqQcgrOaJ5PfBvh8RmGoio35Ph1UdiuajKYLTXyb+GkIiVvKYGCVcQGqUU9EEKYYNvRC2Xc5dQop4dWbjBBlvzEcwBUZXWMqnqLQ+O+DuFZ0Z7iQsQEAgCEoMibodWKeDAhLXmgkgiJyRg0ahlbedPkLigZDWkAewXqojNEgGZQWMvh1C9WdOw/hANuJDBG/MYQZkuHECdVEODgo0Nt38EsyFmR4Hca48ZYgRMiushu2K2QiBEBXzlyubxDiq1hvHsqaJfdHggAAOw==","alt":"esrik image gif"},"information":"kazordoon npc","buy":[{"name":"Axe","price":7},{"name":"Battle Axe","price":80},{"name":"Battle Hammer","price":120},{"name":"Battle Shield","price":95},{"name":"Bone Club","price":5},{"name":"Bone Sword","price":20},{"name":"Brass Armor","price":150},{"name":"Brass Helmet","price":30},{"name":"Brass Legs","price":49},{"name":"Brass Shield","price":25},{"name":"Carlin Sword","price":118},{"name":"Chain Armor","price":70},{"name":"Chain Helmet","price":17},{"name":"Chain Legs","price":25},{"name":"Club","price":1},{"name":"Coat","price":1},{"name":"Copper Shield","price":50},{"name":"Crowbar","price":50},{"name":"Dagger","price":2},{"name":"Double Axe","price":260},{"name":"Doublet","price":3},{"name":"Dwarven Shield","price":100},{"name":"Fire Sword","price":1000},{"name":"Halberd","price":400},{"name":"Hand Axe","price":4},{"name":"Hatchet","price":25},{"name":"Iron Helmet","price":150},{"name":"Jacket","price":1},{"name":"Katana","price":35},{"name":"Leather Armor","price":12},{"name":"Leather Boots","price":2},{"name":"Leather Helmet","price":4},{"name":"Leather Legs","price":9},{"name":"Legion Helmet","price":22},{"name":"Longsword","price":51},{"name":"Mace","price":30},{"name":"Morning Star","price":100},{"name":"Orcish Axe","price":350},{"name":"Plate Armor","price":400},{"name":"Plate Legs","price":115},{"name":"Plate Shield","price":45},{"name":"Rapier","price":5},{"name":"Sabre","price":12},{"name":"Scale Armor","price":75},{"name":"Short Sword","price":10},{"name":"Sickle","price":3},{"name":"Small Axe","price":5},{"name":"Soldier Helmet","price":16},{"name":"Spike Sword","price":240},{"name":"Steel Helmet","price":293},{"name":"Steel Shield","price":80},{"name":"Studded Armor","price":25},{"name":"Studded Club","price":10},{"name":"Studded Helmet","price":20},{"name":"Studded Legs","price":15},{"name":"Studded Shield","price":16},{"name":"Swampling Club","price":40},{"name":"Sword","price":25},{"name":"Throwing Knife","price":2},{"name":"Two Handed Sword","price":450},{"name":"Viking Helmet","price":66},{"name":"Viking Shield","price":85},{"name":"War Hammer","price":470},{"name":"Wooden Shield","price":5},{"name":"Bone Shoulderplate","price":150},{"name":"Broken Draken Mail","price":340},{"name":"Broken Halberd","price":100},{"name":"Broken Slicer","price":120},{"name":"Cursed Shoulder Spikes","price":320},{"name":"Drachaku","price":10000},{"name":"Draken Boots","price":40000},{"name":"Draken Wristbands","price":430},{"name":"Drakinata","price":10000},{"name":"Elite Draken Mail","price":50000},{"name":"Guardian Boots","price":35000},{"name":"High Guard Shoulderplates","price":130},{"name":"Red Lantern","price":250},{"name":"Sai","price":16500},{"name":"Spiked Iron Ball","price":100},{"name":"Trashed Draken Boots","price":40000},{"name":"Twiceslicer","price":28000},{"name":"Twin Hooks","price":500},{"name":"Wailing Widow's Necklace","price":3000},{"name":"Warmaster's Wristguards","price":200},{"name":"Zaoan Armor","price":14000},{"name":"Zaoan Halberd","price":500},{"name":"Zaoan Helmet","price":45000},{"name":"Zaoan Legs","price":14000},{"name":"Zaoan Shoes","price":5000},{"name":"Zaoan Sword","price":30000},{"name":"Zaogun Shoulderplates","price":150}]}
+{
+    "name": "Esrik",
+    "profile": {
+        "data": "data:image/gif;base64,R0lGODlhHwAwANUAAP//AOXs9efn5//jv//fv+XZv/jEoe+/n+y/nrXG1v+shM2zba+vr5+hy82hR7+ff5+fn/+AwLuYhfh4SHaPswDDAJ9/T49/X4CAgIp+R2N+p39/P3Z+R49vP3Nxc4xuPGpqaohaLV9fX1Fcmsg4MG9PH2pMHVFMKTM9fYggEE8vDy8vL1AYCBogAC8PABAIAAQCBAABDAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQJMgAzACwAAAAAHwAwAAAG/8CZbEicGY/I41AoSwor0GjTiZRBrZWp8lpkLr9N4pVpxBLD0ex1rc6an+n2OW5mT81zKX7IHpf9f1J+dVJbbmCEd3aDcW1cjHJvXkVnZVpkS2RUm5ydnp+goaKjpKWmp6ipqqudlatDCiwkmagyCiSyEymzZ12gMiy5CsC3Zx0dtJwyE7gsKbspMikTxTIPx8lOwBPC0QgyvDIHBNfXl0m2LLqyLDIDQ8xDBwcP9cibQyQKukMSQ9FD7D0YZw4fOG8DPsAgMUEGChnYOgysd86SPxkIDHxjGGOEBiIrhkg8UFFIwwEIEi6D0bHBiIcrGEAAIbKkFwkfJkyAMaFjgtAEI2LOFCECQjYlEnjCWLozmoYAMkoMFeFBwNEyCJZiHMAUYAkLK4gWtWrTnUKG+khMi2pBRtix8kpi/AbuVryvQy6sgEAWGxUZEgL7YxgNr4wLF3pdFfIhJU4ihkMkRqGh8ojFQgQDftdWhgoTDisHAPqw1QfAjU/LADAEhccEFDS8tKlERmN/qh269mj5IW1LionsHjEbsxC8QigPWZBBNwrfMk78pqWYQ68W0X/j4+CggPQhJ5pLLxX9hPkwQziMJ99FBnfv2kOVP89q0owgACH5BAkyADMALAAAAAAfADAAAAb/wJlsSJwZj8jjUChLCivQaNOJlEGtlanyWmQuv03ilWnEEsPR7HWtzpqf6fY5bmZPzXMpfsgel/1/Un51UltuYIR3doNxbVyMcm9eRWdlWmRLZFSbnJ2en6ChoqOkpaanqKmqq52Vq0MKLCSZqDIKJLITKbNnl6AyLLkKwLe9vpwyE7gsKbspMikTxTIftMgsE8LPCDK8MggI1cdJttgpsiwyA0PKQwMIHR3jSt0KukMSQ89D4BIfEvJadds24AMMEhNkoJAhoaGEcPOY5PtmgBtCGCM0UPOH4F1AKsnUdaw2AQbGBiMWbuwXkYi/CSVLjkiQYASRfw0jGoFR0mTJymcaAqQcgrOaJ5PfBvh8RmGoio35Ph1UdiuajKYLTXyb+GkIiVvKYGCVcQGqUU9EEKYYNvRC2Xc5dQop4dWbjBBlvzEcwBUZXWMqnqLQ+O+DuFZ0Z7iQsQEAgCEoMibodWKeDAhLXmgkgiJyRg0ahlbedPkLigZDWkAewXqojNEgGZQWMvh1C9WdOw/hANuJDBG/MYQZkuHECdVEODgo0Nt38EsyFmR4Hca48ZYgRMiushu2K2QiBEBXzlyubxDiq1hvHsqaJfdHggAAOw==",
+        "alt": "esrik image gif"
+    },
+    "information": "kazordoon npc",
+    "buy": [
+        {
+            "name": "Axe",
+            "price": 7
+        },
+        {
+            "name": "Battle Axe",
+            "price": 80
+        },
+        {
+            "name": "Battle Hammer",
+            "price": 120
+        },
+        {
+            "name": "Battle Shield",
+            "price": 95
+        },
+        {
+            "name": "Bone Club",
+            "price": 5
+        },
+        {
+            "name": "Bone Sword",
+            "price": 20
+        },
+        {
+            "name": "Brass Armor",
+            "price": 150
+        },
+        {
+            "name": "Brass Helmet",
+            "price": 30
+        },
+        {
+            "name": "Brass Legs",
+            "price": 49
+        },
+        {
+            "name": "Brass Shield",
+            "price": 25
+        },
+        {
+            "name": "Carlin Sword",
+            "price": 118
+        },
+        {
+            "name": "Chain Armor",
+            "price": 70
+        },
+        {
+            "name": "Chain Helmet",
+            "price": 17
+        },
+        {
+            "name": "Chain Legs",
+            "price": 25
+        },
+        {
+            "name": "Club",
+            "price": 1
+        },
+        {
+            "name": "Coat",
+            "price": 1
+        },
+        {
+            "name": "Copper Shield",
+            "price": 50
+        },
+        {
+            "name": "Crowbar",
+            "price": 50
+        },
+        {
+            "name": "Dagger",
+            "price": 2
+        },
+        {
+            "name": "Double Axe",
+            "price": 260
+        },
+        {
+            "name": "Doublet",
+            "price": 3
+        },
+        {
+            "name": "Dwarven Shield",
+            "price": 100
+        },
+        {
+            "name": "Fire Sword",
+            "price": 1000
+        },
+        {
+            "name": "Halberd",
+            "price": 400
+        },
+        {
+            "name": "Hand Axe",
+            "price": 4
+        },
+        {
+            "name": "Hatchet",
+            "price": 25
+        },
+        {
+            "name": "Iron Helmet",
+            "price": 150
+        },
+        {
+            "name": "Jacket",
+            "price": 1
+        },
+        {
+            "name": "Katana",
+            "price": 35
+        },
+        {
+            "name": "Leather Armor",
+            "price": 12
+        },
+        {
+            "name": "Leather Boots",
+            "price": 2
+        },
+        {
+            "name": "Leather Helmet",
+            "price": 4
+        },
+        {
+            "name": "Leather Legs",
+            "price": 9
+        },
+        {
+            "name": "Legion Helmet",
+            "price": 22
+        },
+        {
+            "name": "Longsword",
+            "price": 51
+        },
+        {
+            "name": "Mace",
+            "price": 30
+        },
+        {
+            "name": "Morning Star",
+            "price": 100
+        },
+        {
+            "name": "Orcish Axe",
+            "price": 350
+        },
+        {
+            "name": "Plate Armor",
+            "price": 400
+        },
+        {
+            "name": "Plate Legs",
+            "price": 115
+        },
+        {
+            "name": "Plate Shield",
+            "price": 45
+        },
+        {
+            "name": "Rapier",
+            "price": 5
+        },
+        {
+            "name": "Sabre",
+            "price": 12
+        },
+        {
+            "name": "Scale Armor",
+            "price": 75
+        },
+        {
+            "name": "Short Sword",
+            "price": 10
+        },
+        {
+            "name": "Sickle",
+            "price": 3
+        },
+        {
+            "name": "Small Axe",
+            "price": 5
+        },
+        {
+            "name": "Soldier Helmet",
+            "price": 16
+        },
+        {
+            "name": "Spike Sword",
+            "price": 240
+        },
+        {
+            "name": "Steel Helmet",
+            "price": 293
+        },
+        {
+            "name": "Steel Shield",
+            "price": 80
+        },
+        {
+            "name": "Studded Armor",
+            "price": 25
+        },
+        {
+            "name": "Studded Club",
+            "price": 10
+        },
+        {
+            "name": "Studded Helmet",
+            "price": 20
+        },
+        {
+            "name": "Studded Legs",
+            "price": 15
+        },
+        {
+            "name": "Studded Shield",
+            "price": 16
+        },
+        {
+            "name": "Swampling Club",
+            "price": 40
+        },
+        {
+            "name": "Sword",
+            "price": 25
+        },
+        {
+            "name": "Throwing Knife",
+            "price": 2
+        },
+        {
+            "name": "Two Handed Sword",
+            "price": 450
+        },
+        {
+            "name": "Viking Helmet",
+            "price": 66
+        },
+        {
+            "name": "Viking Shield",
+            "price": 85
+        },
+        {
+            "name": "War Hammer",
+            "price": 470
+        },
+        {
+            "name": "Wooden Shield",
+            "price": 5
+        },
+        {
+            "name": "Bone Shoulderplate",
+            "price": 150
+        },
+        {
+            "name": "Broken Draken Mail",
+            "price": 340
+        },
+        {
+            "name": "Broken Halberd",
+            "price": 100
+        },
+        {
+            "name": "Broken Slicer",
+            "price": 120
+        },
+        {
+            "name": "Cursed Shoulder Spikes",
+            "price": 320
+        },
+        {
+            "name": "Drachaku",
+            "price": 10000
+        },
+        {
+            "name": "Draken Boots",
+            "price": 40000
+        },
+        {
+            "name": "Draken Wristbands",
+            "price": 430
+        },
+        {
+            "name": "Drakinata",
+            "price": 10000
+        },
+        {
+            "name": "Elite Draken Mail",
+            "price": 50000
+        },
+        {
+            "name": "Guardian Boots",
+            "price": 35000
+        },
+        {
+            "name": "High Guard Shoulderplates",
+            "price": 130
+        },
+        {
+            "name": "Red Lantern",
+            "price": 250
+        },
+        {
+            "name": "Sai",
+            "price": 16500
+        },
+        {
+            "name": "Spiked Iron Ball",
+            "price": 100
+        },
+        {
+            "name": "Trashed Draken Boots",
+            "price": 40000
+        },
+        {
+            "name": "Twiceslicer",
+            "price": 28000
+        },
+        {
+            "name": "Twin Hooks",
+            "price": 500
+        },
+        {
+            "name": "Wailing Widow's Necklace",
+            "price": 3000
+        },
+        {
+            "name": "Warmaster's Wristguards",
+            "price": 200
+        },
+        {
+            "name": "Zaoan Armor",
+            "price": 14000
+        },
+        {
+            "name": "Zaoan Halberd",
+            "price": 500
+        },
+        {
+            "name": "Zaoan Helmet",
+            "price": 45000
+        },
+        {
+            "name": "Zaoan Legs",
+            "price": 14000
+        },
+        {
+            "name": "Zaoan Shoes",
+            "price": 5000
+        },
+        {
+            "name": "Zaoan Sword",
+            "price": 30000
+        },
+        {
+            "name": "Zaogun Shoulderplates",
+            "price": 150
+        }
+    ]
+}

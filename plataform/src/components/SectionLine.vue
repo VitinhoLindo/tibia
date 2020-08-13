@@ -25,6 +25,10 @@ export default {
     openSection: {
       type: Function,
       required: true
+    },
+    getNumber: {
+      type: Function,
+      required: true
     }
   },
   methods: {
@@ -33,16 +37,16 @@ export default {
       return `Date: ${date.toLocaleString()}`;
     },
     getExperience() {
-      return `Experiencia: ${this.section.experience}`;
+      return `Experiencia: ${this.getNumber(this.section.experience, '.')}`;
     },
     getLoot() {
-      return `Loot: ${this.section.loot}`;
+      return `Loot: ${this.getNumber(this.section.loot)}`;
     },
     getSupplies() {
-      return `Supplie: ${this.section.supplies}`;
+      return `Supplie: ${this.getNumber(this.section.supplies)}`;
     },
     getBalance() {
-      return `Balance: ${this.section.loot - this.section.supplies}`;
+      return `Balance: ${this.getNumber(this.section.loot - this.section.supplies)}`;
     },
     getHealing() {
       return `Healing: ${this.section.healing}`;
@@ -59,8 +63,8 @@ export default {
 
 <style>
 .section-line {
-  width: 250px;
-  height: 150px;
+  width: 290px;
+  height: 180px;
   margin: 2.5px 2.5px 2.5px 2.5px;
   cursor: pointer;
   background-color: #718093;

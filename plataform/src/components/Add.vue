@@ -3,6 +3,7 @@
     <div class="content">
       <div v-on:click="addSection">Section</div>
       <div v-on:click="addNpc">Npc</div>
+      <div v-on:click="showMonit">Monit</div>
     </div>
   </div>
 </template>
@@ -20,6 +21,10 @@ export default {
       required: true
     },
     addNpc: {
+      type: Function,
+      required: true
+    },
+    showMonit: {
       type: Function,
       required: true
     }
@@ -53,7 +58,7 @@ export default {
 
 .add .content {
   width: 200px;
-  height: 75px;
+  height: 115px;
   border: 1px solid #888888;
   background-color: #353b48;
   color: #ffffff;
