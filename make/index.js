@@ -128,7 +128,7 @@ class Make {
     ]);
   }
 
-  async set(cmd = '--controller', value = '') {
+  async set(cmd = '--set', value = '') {
     if (!value) throw `invalid value to command ${cmd}`;
 
     switch (value) {
@@ -140,7 +140,6 @@ class Make {
   async hashable(cmd = '--hash', value = '') {
     if (!value) throw `invalid value to command ${cmd}`;
 
-    console.log(value);
     console.log(this.hash(value));
   }
 
