@@ -19,8 +19,16 @@ const files = {
     },
     'env-example': {
       path: './.env-example',
-      content: `HOST=localhost\nPORT=80\nMAXREQUEST=50\nRESETINTERVALMINUTE=1\n\nMYSQL_HOST=localhost\nMYSQL_PORT=3306\nMYSQL_USER=\nMYSQL_PASS=\nMYSQL_DB=\n\nKEY=@KEY@\nIV=@IV@\n`
+      content: `PROTOCOL=http\nHOST=localhost\nPORT=80\n\nSLL_CERT=\nSSL_KEY=\n\nMAXREQUEST=50\nRESETINTERVALMINUTE=1\nREQUEST_TIMEOUT=8000\n\nMYSQL_HOST=localhost\nMYSQL_PORT=3306\nMYSQL_USER=\nMYSQL_PASS=\nMYSQL_DB=\nMYSQL_TIMEOUT=15000\n\nMYSQL_SSL_CA=\nMYSQL_SSL_CERT=\nMYSQL_SSL_KEY=\n\nKEY=@KEY@\nIV=@IV@\n`
     }
+  },
+  '--model-sql': {
+    path: './app/@value@.js',
+    content: `const BaseModelSql = require('./BaseModelSql');\n\nconst table = '@table@';\n\nconst fields = [\n  'id'\n];\n\nconst encrypt = [];\n\nconst timestamp = false;\n\nclass @value@ extends BaseModelSql {\n  constructor() { super(); }\n\n  static getTable() { return table; }\n\n  static getFields() { return fields; }\n\n  static getTimesTamp() { return timestamp; }\n\n  static encrypt() { return encrypt; }\n}\n\nmodule.exports = @value@;` 
+  },
+  '--resource-sql': {
+    path: './app/resources/@value@.js',
+    content: `const Base = require('./Base');\nconst @value@ = require('../@value@');\nconst { } = require('../../resource/fields');\n\nclass @value@ extends Base {\n  model = Auth;\n\n  constructor(request, response) {\n    super(request, response);\n    this.singularLabel('');\n    this.pluralLabel('');\n  }\n\n  async fields() {\n    return [];\n  }\n\n  static make(request, response) {\n    return new @value@(request, response);\n  }\n}\n\nmodule.exports = @value@;`
   }
 }
 
@@ -49,8 +57,10 @@ class Make {
   validateCommand(cmd) {
     switch (cmd) {
       case '--controller': return { status: true, command: 'controller' };
-      case '--set':        return { status: true, command: 'set' }
-      case '--hash':       return { status: true, command: 'hashable' }
+      case '--set':        return { status: true, command: 'set' };
+      case '--hash':       return { status: true, command: 'hashable' };
+      case '--model-sql':  return { status: true, command: 'modelSql' };
+      case '--resource-sql':  return { status: true, command: 'resourceSql' };
 
       default: return { status: false };
     }
@@ -126,6 +136,33 @@ class Make {
         { encoding: 'utf-8' }
       )
     ]);
+  }
+
+  async modelSql(cmd = '--model-sql', value = '') {
+    if (!value) throw `invalid value to command ${cmd}`;
+
+    value = `${value[0].toUpperCase()}${value.substr(1).toLowerCase()}`;
+    let table = value.toLowerCase();
+
+    await this.fs.writeFileSync(
+      files[cmd].path.replace(/@value@/g, value),
+      files[cmd].content.replace(/@value@/g, value).replace(/@table@/g, table),
+      { encoding: 'utf-8' }
+    )
+  }
+
+  async resourceSql(cmd = '--resource-sql', value = '') {
+    if (!value) throw `invalid value to command ${cmd}`;
+
+    let _v = `${value[0].toUpperCase()}${value.substr(1).toLowerCase()}`;
+
+    await this.modelSql('--model-sql', _v);
+
+    await this.fs.writeFileSync(
+      files[cmd].path.replace(/@value@/g, _v),
+      files[cmd].content.replace(/@value@/g, _v),
+      { encoding: 'utf-8' }
+    )
   }
 
   async set(cmd = '--set', value = '') {

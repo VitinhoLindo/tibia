@@ -1,0 +1,32 @@
+{
+  "name": "tibia",
+  "version": "0.0.1",
+  "description": "fan site tibia",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VitinhoLindo/tibia.git"
+  },
+  "keywords": [
+    "nodejs",
+    "vuejs",
+    "javascript",
+    "tibia"
+  ],
+  "author": "victorpsf2@hotmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VitinhoLindo/tibia/issues"
+  },
+  "homepage": "https://github.com/VitinhoLindo/tibia#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.3",
+    "mysql2": "^2.2.5"
+  }
+}
