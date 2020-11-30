@@ -1,108 +1,91 @@
-var route = {
-    name: '@name@',
-    dirController: 'controllers',
-    controllerName: '@name@Controller',
-    controllerContent: `const BaseController = require('./BaseController');\n\n`+
-    `class @controller@ extends BaseController {\n  constructor( request, response) {\n` + 
-    `    super( request, response);\n  }\n}\n\n` + 
-    `module.exports = @controller@;`,
-    dirRoute: `route`,
-    routeName: '@name@',
-    routeContent: `const { Router } = require('express');\n` +
-    `const @mcontroller@ = require('../@controller@');\n` +
-    `const route = Router();\n\n//route.get('/', (request, response) => {\n//  (new @mcontroller@(request, response));\n//});\n\n` + 
-    `\n\n//route.post('/', (request, response) => {\n//  (new @mcontroller@(request, response));\n//});\n\n` +
-    `\n\n//route.put('/', (request, response) => {\n//  (new @mcontroller@(request, response));\n//});\n\n` +
-    `\n\n//route.delete('/', (request, response) => {\n//  (new @mcontroller@(request, response));\n//});\n\n` +
-    `module.exports = route;`
+const files = {
+  '--controller': {
+    controller: {
+      path: './http/controller/@value@Controller.js',
+      content: `const BaseController = require('./BaseController');\nconst @value@Service = require('../service/@value@Service');\n\nclass @value@Controller extends BaseController {\n  constructor(request, response) { super(request, response) }\n\n  static using(request, response) {\n    return new @value@Controller(request, response);\n  }\n\n  async option() {\n    return this.defaultResponseJSON();\n  }\n\n  async get() {\n    return this.defaultResponseJSON();\n  }\n\n  async post() {\n    return this.defaultResponseJSON();\n  }\n\n  async put() {\n    return this.defaultResponseJSON();\n  }\n\n  async delete() {\n    return this.defaultResponseJSON();\n  }\n\n}\n\nmodule.exports = @value@Controller;`
+    },
+    service: {
+      path: './http/service/@value@Service.js',
+      content: `class @value@Service {\n  constructor() {}\n}\n\nmodule.exports = @value@Service;`
+    },
+    api: {
+      path: './http/api/@value@Api.js',
+      content: `const { Router } = require('express');\nconst route = Router();\nconst @value@Controller = require('../controller/@value@Controller');\n\nroute.options('/', (request, response) => {\n  @value@Controller.using(request, response).option();\n});\n\nroute.get('/', (request, response) => {\n  @value@Controller.using(request, response).get();\n});\n\nroute.put('/', (request, response) => {\n  @value@Controller.using(request, response).put();\n});\n\nroute.post('/', (request, response) => {\n  @value@Controller.using(request, response).post();\n});\n\nroute.delete('/', (request, response) => {\n  @value@Controller.using(request, response).delete();\n});\n\nmodule.exports = {\n  route: '/@route@',\n  use: route\n};`
+    }
+  }
 }
 
 
 class Make {
-  process = require('process');
-  os      = require('os');
-  fs      = require('fs');
-  args = {
-    bin: this.process.argv[0],
-    file: this.process.argv[1],
-    command: this.process.argv[2],
-    commandFile: this.process.argv[3]
-  };
-  plataformDir = '';
+  fs       = require('fs');
+  process  = require('process');
+  os       = require('os');
+  crypto   = require('crypto');
+  commands = [];
 
-  __dirname = ''
-  constructor(dirname) {
-    this.__dirname = dirname.replace(/(\/|\\)make/g, '');
-    this.setPlataform();
-  }
+  constructor() {}
 
-  setPlataform() {
-    switch(this.os.platform()) {
-      case 'android':
-      case 'linux':
-        this.plataformDir = '/';
-        break;
-      case 'windows':
-        this.plataformDir = '\\';
-        break;
+  async readCommands() {
+    if (this.process.argv.length <= 2) throw 'pass arguments to make';
+
+    for(let x = 2; x < this.process.argv.length; x++) {
+      let command = {};
+
+      let [ c, v ] =this.process.argv[x].split('=');
+      command[c] = v;
+      this.commands.push(command);
     }
   }
 
-  async saveFileDir(args = [{ dirFile: '', content: '', encoding: '' }]) {
-    for (let index in args) {
-      let arg = args[index];
-
-      await this.fs.writeFileSync(arg.dirFile, arg.content, { encoding: arg.encoding });
+  validateCommand(cmd) {
+    switch (cmd) {
+      case '--controller': return { status: true, command: 'controller' };
+    
+      default: return { status: false };
     }
   }
 
-  getRouteDir() {
-    return `${this.__dirname}${this.plataformDir}${route.dirController}${this.plataformDir}${route.dirRoute}${this.plataformDir}${route.routeName}.js`;
-  }
+  async controller(cmd = '--controller', value = '') {
+    if (!value) throw `invalid value to command ${cmd}`;
 
-  getControllerDir() {
-    return `${this.__dirname}${this.plataformDir}${route.dirController}${this.plataformDir}${route.controllerName}.js`;
-  }
+    let route = value.toLowerCase();
+        value = `${value[0].toUpperCase()}${value.substr(1).toLowerCase()}`;
 
-  setRoute() {
-    if (this.args.commandFile == undefined) return true;
-    this.args.commandFile = this.args.commandFile.replace(/\d+/, '');
-
-    let name = '';
-    for (let x = 0; x < this.args.commandFile.length; x++)
-      if (x == 0) name += this.args.commandFile[x].toUpperCase();
-      else        name += this.args.commandFile[x];
-    this.args.commandFile = this.args.commandFile.toLowerCase();
-
-    route.name              = this.args.commandFile;
-    route.controllerName    = route.controllerName.replace(/@name@/g, name);
-    route.controllerContent = route.controllerContent.replace(/@controller@/g, route.controllerName);
-    route.routeName         = route.routeName.replace(/@name@/g, this.args.commandFile);
-
-    let stringControllerName = '';
-    for (let x = 0; x < route.controllerName.length; x++) {
-        if (x == 0) stringControllerName += route.controllerName[x].toLowerCase();
-        else        stringControllerName += route.controllerName[x];
-    }
-
-    route.routeContent      = route.routeContent.replace(/@controller@/g, route.controllerName).replace(/@mcontroller@/g, stringControllerName);
-
-    this.saveFileDir([
-        { dirFile: this.getRouteDir(), content: route.routeContent, encoding: 'utf-8' },
-        { dirFile: this.getControllerDir(), content: route.controllerContent, encoding: 'utf-8' }
+    await Promise.all([
+      this.fs.writeFileSync(files[cmd].controller.path.replace(/@value@/g, value), files[cmd].controller.content.replace(/@value@/g, value), { encoding: 'utf-8' }),
+      this.fs.writeFileSync(files[cmd].service.path.replace(/@value@/g, value), files[cmd].service.content.replace(/@value@/g, value), { encoding: 'utf-8' }),
+      this.fs.writeFileSync(files[cmd].api.path.replace(/@value@/g, value), files[cmd].api.content.replace(/@value@/g, value).replace(/@route@/g, route), { encoding: 'utf-8' })
     ]);
   }
 
-  runCommand() {
-    switch (this.args.command) {
-      case 'route':
-        return this.setRoute();
-      default:
-        break;
+  async executeCommand() {
+    for(let value of this.commands) {
+      for(let key in value) {
+        let cmd = this.validateCommand(key);
+        try {
+          if (!cmd.status) throw `invalid command ${key}`;
+          
+          await this[cmd.command](key, value[key]);
+        } catch (error) {
+          console.log(error);
+        }
+      }
     }
+  }
+  
+  async build() {
+    try {
+      await this.readCommands();
+    } catch (error) {
+      console.log(error);
+    }
+
+    await this.executeCommand();
   }
 }
 
-(() => {
-  (new Make(__dirname)).runCommand();
+(async () => {
+  const make = new Make();
+
+  make.build();
 })();

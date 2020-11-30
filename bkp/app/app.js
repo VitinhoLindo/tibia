@@ -27,6 +27,7 @@ class App extends Config {
     }
 
     async listen() {
+        await this.setConfig();
         const express = this.express();
         Middleware(express, this);
         const server  = this.http.createServer(express);

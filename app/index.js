@@ -1,1 +1,0 @@
-exports.App = require('./app');
