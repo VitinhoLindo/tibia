@@ -1,4 +1,7 @@
-const Variables = require('./Variables');
+const Variables  = require('./Variables');
+const Collection = require('../util/Collection');
+const UUID       = require('../util/UUID');
+const JWT        = require('../util/JWT');
 
 class Modules extends Variables {
   os         = require('os');
@@ -9,6 +12,9 @@ class Modules extends Variables {
   crypto     = require('crypto');
   express    = require('express');
   bodyparser = require('body-parser');
+  Collection = Collection;
+  UUID       = new UUID();
+  JWT        = JWT;
 
   constructor() { super(); }
 }

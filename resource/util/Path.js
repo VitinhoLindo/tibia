@@ -10,7 +10,8 @@ const defaults = {
   gif: 'gif/',
   doc: 'doc/',
   video: 'video/',
-  ssl: 'ssl/'
+  ssl: 'ssl/',
+  lang: 'lang/',
 };
 
 const windows = {
@@ -26,6 +27,7 @@ const windows = {
   doc: 'doc\\',
   video: 'video\\',
   ssl: 'ssl\\',
+  lang: 'lang\\',
 };
 
 const linux = defaults;
@@ -101,6 +103,12 @@ class Path {
   publicVideoDir() {
     let path = this.publicDir();
     return `${path}${this.dirs.video}`;
+  }
+
+  publicLangDir(file = '') {
+    let path = this.publicDir();
+    path = `${path}${this.dirs.lang}`;
+    return (file) ? `${path}${file}` : path;
   }
 }
 

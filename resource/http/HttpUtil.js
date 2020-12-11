@@ -1,4 +1,3 @@
-const { timeStamp } = require('console');
 const express = require('express');
 const Validator = require('./Validator');
 
@@ -15,7 +14,7 @@ class HttpUtil {
   }
 
   cacheCrypto() {
-    let cache = this.app.getCache(this.request.socket.remoteAddress);
+    let cache = this.app.find(this.request.socket.remoteAddress);
     return cache ? true : false;
   }
 
@@ -25,48 +24,51 @@ class HttpUtil {
   }
 
   async decrypt(value) {
-    let cache = this.app.getCache(this.request.socket.remoteAddress);
+    let cache = this.app.find(this.request.socket.remoteAddress);
 
-    if (!cache || !cache.server || !cache.server.priv) {
+    if (!cache || !cache.server || !cache.server.privateKey) {
       throw `dont\'t exists server private key for ${this.request.socket.remoteAddress}`;
     }
 
-    let decryptoBuffer = null, count = 0;
-    let bufferValue = Buffer.from(value, 'hex');
+    // console.log(cache.server.privateKey);
 
-    while(count < 10) {
-      try {
-        decryptoBuffer = await this.app.crypto.webcrypto.subtle.decrypt({
-          name: this.app.serverKeyAlgorithm,
-          hash: this.app.serverKeyHash,
-          iv: cache.ivs[count]
-        }, cache.server.priv, bufferValue);
+    // let decryptoBuffer = null, count = 0;
+    // let bufferValue = Buffer.from(value, 'hex');
+
+    let decryptoBuffer = await this.app.crypto.webcrypto.subtle.decrypt({
+      name: this.app.keyAlgorithm,
+      iv: new Uint8Array([15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30])
+    }, cache.server.privateKey, Buffer.from(value, 'hex'));
+
+    return Buffer.from(decryptoBuffer).toString('utf-8');
+    // while(count < 10) {
+    //   try {
     
-        break;
-      } catch (error) { }
-      count++;
-    }
+    //     break;
+    //   } catch (error) { }
+    //   count++;
+    // }
 
-    if (decryptoBuffer) {
-      return Buffer.from(decryptoBuffer, 'utf-8').toString();
-    }
-    else {
-      throw 'failure in decrypt data';
-    }
+    // if (decryptoBuffer) {
+    //   return Buffer.from(decryptoBuffer, 'utf-8').toString();
+    // }
+    // else {
+    //   throw 'failure in decrypt data';
+    // }
   }
 
   async encrypt(value) {
-    let cache = this.app.getCache(this.request.socket.remoteAddress);
+    let cache = this.app.find(this.request.socket.remoteAddress);
 
-    if (!cache || !cache.app || !cache.app.pub) {
+    if (!cache || !cache.app || !cache.app.publicKey) {
       throw `dont\'t exists app public key for ${this.request.socket.remoteAddress}`;
     }
     
     let encryptBuffer = await this.app.crypto.webcrypto.subtle.encrypt({
-      name: this.app.serverKeyAlgorithm,
-      hash: this.app.serverKeyHash,
-      iv: this.getRandomIvs(cache.ivs)
-    }, cache.app.pub, Buffer.from(value, 'utf-8'));
+      name: this.app.keyAlgorithm,
+      hash: this.app.hashAlgorithm,
+      iv: new Uint8Array([15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30])
+    }, cache.app.publicKey, Buffer.from(value, 'utf-8'));
 
     return Buffer.from(encryptBuffer).toString('hex');
   }

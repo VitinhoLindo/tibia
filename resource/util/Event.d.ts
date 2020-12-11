@@ -7,9 +7,9 @@ interface EventPrintOption {
 
 class Event extends EventEmitter {
 
-  emit(event: 'print', arg: EventPrintOption): Boolean;
+  emit(event: 'print', arg: [EventPrintOption]): Boolean;
 
-  on(event: 'print', arg: EventPrintOption): this;
+  on(event: 'print', arg: [EventPrintOption]): this;
 }
 
 export = Event;

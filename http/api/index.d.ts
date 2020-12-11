@@ -1,8 +1,6 @@
-import { Router } from 'express'
-
-interface api {
+interface Api {
   route: String;
-  use: Router;
+  use: any;
 }
 
-export = [api];
+export = [Api];

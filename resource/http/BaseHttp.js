@@ -39,7 +39,7 @@ class BaseHttp extends HttpUtil {
     this.response.end();
   }
 
-  defaultResponseJSON(_response = new ResponseModel) {
+  defaultResponseJSON(_response = ResponseModel) {
     if (!_response.requestStatus) _response.requestStatus = 200;
     if (!_response.requestMessage) _response.requestMessage = 'Success';
     if (!_response.time) _response.time = currentTime();

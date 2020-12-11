@@ -2,10 +2,11 @@ const express = require('express');
 const http = require('../../http');
 
 class Base {
-  request = express.request;
+  request  = express.request;
   response = express.response;
-  app = http();
+  app      = http();
 
+  autentication = false;
   page = { 
     class: 'form-table',
     singular: '',

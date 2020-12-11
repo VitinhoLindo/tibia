@@ -2,11 +2,11 @@ const files = {
   '--controller': {
     controller: {
       path: './http/controller/@value@Controller.js',
-      content: `const BaseController = require('./BaseController');\nconst @value@Service = require('../service/@value@Service');\n\nclass @value@Controller extends BaseController {\n  constructor(request, response) { super(request, response) }\n\n  static using(request, response) {\n    return new @value@Controller(request, response);\n  }\n\n  async option() {\n    return this.defaultResponseJSON();\n  }\n\n  async get() {\n    return this.defaultResponseJSON();\n  }\n\n  async post() {\n    return this.defaultResponseJSON();\n  }\n\n  async put() {\n    return this.defaultResponseJSON();\n  }\n\n  async delete() {\n    return this.defaultResponseJSON();\n  }\n\n}\n\nmodule.exports = @value@Controller;`
+      content: `const @value@Service = require('../service/@value@Service');\n\nclass @value@Controller extends @value@Service {\n  constructor(request, response) { super(request, response) }\n\n  static using(request, response) {\n    return new @value@Controller(request, response);\n  }\n\n  async option() {\n    return this.defaultResponseJSON();\n  }\n\n  async get() {\n    return this.defaultResponseJSON();\n  }\n\n  async post() {\n    return this.defaultResponseJSON();\n  }\n\n  async put() {\n    return this.defaultResponseJSON();\n  }\n\n  async delete() {\n    return this.defaultResponseJSON();\n  }\n\n}\n\nmodule.exports = @value@Controller;`
     },
     service: {
       path: './http/service/@value@Service.js',
-      content: `class @value@Service {\n  constructor() {}\n}\n\nmodule.exports = @value@Service;`
+      content: `const Base = require('./Base');\n\nclass @value@Service extends Base {\n  constructor(request, response) { super(request, response) }\n}\n\nmodule.exports = @value@Service;`
     },
     api: {
       path: './http/api/@value@Api.js',
@@ -24,7 +24,7 @@ const files = {
   },
   '--model-sql': {
     path: './app/@value@.js',
-    content: `const BaseModelSql = require('./BaseModelSql');\n\nconst table = '@table@';\n\nconst fields = [\n  'id'\n];\n\nconst encrypt = [];\n\nconst timestamp = false;\n\nclass @value@ extends BaseModelSql {\n  constructor() { super(); }\n\n  static getTable() { return table; }\n\n  static getFields() { return fields; }\n\n  static getTimesTamp() { return timestamp; }\n\n  static encrypt() { return encrypt; }\n}\n\nmodule.exports = @value@;` 
+    content: `const BaseModelSql = require('./BaseModelSql');\n\nconst table = '@table@';\n\nconst fields = [\n  'id'\n];\n\nconst encrypt = [];\nconst hash = [];\n\nconst timestamp = false;\n\nclass @value@ extends BaseModelSql {\n  constructor() { super(); }\n\n  static getTable() { return table; }\n\n  static getFields() { return fields; }\n\n  static getTimesTamp() { return timestamp; }\n\n  static encrypt() { return encrypt; }\n}\n\nmodule.exports = @value@;` 
   },
   '--resource-sql': {
     path: './app/resources/@value@.js',
@@ -34,16 +34,29 @@ const files = {
 
 
 class Make {
-  fs       = require('fs');
-  process  = require('process');
-  os       = require('os');
-  crypto   = require('crypto');
-  commands = [];
+  fs        = require('fs');
+  process   = require('process');
+  os        = require('os');
+  crypto    = require('crypto');
+  commands  = [];
+  arguments = [
+    { command: '\x1b[32m--controller=[\x1b[33mrouter\x1b[32m]', message: '\x1b[37mcreate new controller and service and api' },
+    { command: '\x1b[32m--set', message: '\x1b[34m--set=\x1b[33menv \x1b[37mcreate new .env-example file and .env-example' },
+    { command: '\x1b[32m--hash=[\x1b[33mvalue\x1b[32m]', message: '\x1b[37mcreate new hash using sha256 algorithm'},
+    { command: '\x1b[32m--model-sql=[\x1b[33mmodel\x1b[32m]', message: '\x1b[37mcreate new model using mysql database'},
+    { command: '\x1b[32m--resource-sql=[\x1b[33mmodel\x1b[32m]', message: '\x1b[37mcreate resource and model using mysql database'}
+  ]
 
   constructor() {}
 
+  showArguments() {
+    for(let arg of this.arguments) {
+      console.log(`\n\n${arg.command}\n\n    ${arg.message}`);
+    }
+  }
+
   async readCommands() {
-    if (this.process.argv.length <= 2) throw 'pass arguments to make';
+    if (this.process.argv.length <= 2) return this.showArguments();
 
     for(let x = 2; x < this.process.argv.length; x++) {
       let command = {};
