@@ -31,13 +31,14 @@ class SyncController extends SyncService {
       return this.defaultResponseJSON(validator.modelResponse());
     }
   
-    let cache = this.app.find(this.request.socket.remoteAddress)
+    let cache = this.app.find(this.request.socket.remoteAddress);
 
     let spubk, sprivk, apubk, date = new Date(), ivs = [];
-    if (cache && cache.app && cache.app.dateCrypto && !all.build) {
+    if (cache && cache.app && cache.app.date) {
       spubk  = cache.server.publicKey;
       sprivk = cache.server.privateKey;
-      date   = cache.app.dateCrypto;
+      ivs    = cache.server.ivs;
+      date   = cache.server.date;
     } else {
       let { publicKey, privateKey }= await this.app.generateKeys();
 
@@ -47,36 +48,11 @@ class SyncController extends SyncService {
 
     apubk = await this.app.importPublicKey(all.p);
 
-    for (let x = 0; x < 20; x++) {
-      ivs.push(this.app.getIv());
-    }
+    if (!ivs.length) 
+      for (let x = 0; x < 20; x++) 
+        ivs.push(this.app.getIv());
 
     return this.responseKey(spubk, sprivk, apubk, date, ivs);
-  }
-
-  async responseKey(serverPublicKey, serverPrivateKey, appPublicKey, date, ivs) {
-    this.app.save(this.request.socket.remoteAddress, {
-      app: {
-        publicKey: appPublicKey,
-        date: date
-      },
-      server: {
-        publicKey: serverPublicKey,
-        privateKey: serverPrivateKey,
-        ivs: ivs
-      }
-    });
-
-    let exported = await this.app.exportPublicKey(serverPublicKey);
-    return this.defaultResponseJSON({ 
-      result: {
-        p: this.app.binaryToHex(exported),
-        i: ivs.map((iv) => {
-          return this.app.binaryToHex(iv);
-        }),
-        d: date
-      }
-    });
   }
 
   async put() {

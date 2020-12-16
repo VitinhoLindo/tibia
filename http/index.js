@@ -7,6 +7,13 @@ class Http extends Config {
   async listen() {
     const config = this.listenConfig();
     const app    = this.express();
+
+    // try {
+    //   console.log(this.crypto.constants.RSA_NO_PADDING);
+    // }catch(e) {
+    //   console.log(e);
+    // }
+    this.readTranslates();
     Route(this, app);
 
     const server = await this.getServer(app);

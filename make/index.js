@@ -24,11 +24,11 @@ const files = {
   },
   '--model-sql': {
     path: './app/@value@.js',
-    content: `const BaseModelSql = require('./BaseModelSql');\n\nconst table = '@table@';\n\nconst fields = [\n  'id'\n];\n\nconst encrypt = [];\nconst hash = [];\n\nconst timestamp = false;\n\nclass @value@ extends BaseModelSql {\n  constructor() { super(); }\n\n  static getTable() { return table; }\n\n  static getFields() { return fields; }\n\n  static getTimesTamp() { return timestamp; }\n\n  static encrypt() { return encrypt; }\n}\n\nmodule.exports = @value@;` 
+    content: `const BaseModelSql = require('./BaseModelSql');\n\nclass @value@ extends BaseModelSql {\n  table = '@table@';\n\n  fields = [\n    'id'\n  ];\n\n  encrypt = [];\n\n  hash = [];\n\n  timestamp = false;\n\n  relation = {};\n\n  constructor() { super(); }\n}\n\nmodule.exports = @value@;` 
   },
   '--resource-sql': {
     path: './app/resources/@value@.js',
-    content: `const Base = require('./Base');\nconst @value@ = require('../@value@');\nconst { } = require('../../resource/fields');\n\nclass @value@ extends Base {\n  model = Auth;\n\n  constructor(request, response) {\n    super(request, response);\n    this.singularLabel('');\n    this.pluralLabel('');\n  }\n\n  async fields() {\n    return [];\n  }\n\n  static make(request, response) {\n    return new @value@(request, response);\n  }\n}\n\nmodule.exports = @value@;`
+    content: `const Base = require('./Base');\nconst @value@Model = require('../@value@');\nconst { } = require('../../resource/fields');\n\nclass @value@ extends Base {\n  model = @value@Model;\n\n  constructor(request, response) {\n    super(request, response);\n    this.singularLabel('');\n    this.pluralLabel('');\n  }\n\n  async fields() {\n    return [];\n  }\n\n  static make(request, response) {\n    return new @value@(request, response);\n  }\n}\n\nmodule.exports = @value@;`
   }
 }
 

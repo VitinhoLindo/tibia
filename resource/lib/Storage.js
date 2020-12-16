@@ -32,6 +32,21 @@ class Storage extends Util {
       }
     }
   }
+
+  statFile(path, encoding = { encoding: 'utf8' }) {
+    try {
+      let content = this.fs.statSync(path, encoding);
+      return {
+        exists: true,
+        content: content
+      };
+    } catch (error) {
+      return {
+        exists: false,
+        content: null
+      };
+    }
+  }
 }
 
 module.exports = Storage;

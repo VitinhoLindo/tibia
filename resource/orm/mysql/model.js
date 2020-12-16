@@ -10,10 +10,14 @@ class Model {
 
   toJSON() {
     let model = new Model();
-    
     let json = {};
-    for(let key of Object.keys(model)) delete this[key];
-    for(let key of Object.keys(this)) json[key] = this[key] || null;
+    let keys = Object.keys(model);
+
+    for(let key of Object.keys(this)) {
+      if (keys.indexOf(key) >= 0) continue;
+      json[key] = this[key] || null;
+    }
+
     return json;
   }
 }

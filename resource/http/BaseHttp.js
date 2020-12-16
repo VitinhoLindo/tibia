@@ -19,7 +19,17 @@ class BaseHttp extends HttpUtil {
   }
 
   _user() {
-    return this.app.getUser(this.request);
+    let token = this.request.token;
+
+    if (!token) return null;
+    let jwt = new (this.app.JWT)();
+    console.log(jwt);
+    // return this.app.getUser(this.request);
+  }
+
+  auth() {
+    let token = this.request.token;
+    return !!token;
   }
 
   setStatus(code) {

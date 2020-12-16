@@ -6,9 +6,22 @@ class Variables extends Event {
   path = Path;
 
   serverLang = 'pt-BR';
+  langs = {}
 
   //
   cache = {}
+
+  //
+  smtp = {
+    host: '',
+    port: '',
+    auth: {
+      user: '',
+      pass: ''
+    }
+  }
+
+  serverHash = 'sha256';
 
   //
   encryptCipher = 'aes-192-cbc';
@@ -16,8 +29,8 @@ class Variables extends Event {
   saltRange     = 24;
 
   keyAlgorithm   = 'RSA-OAEP';
-  hashAlgorithm  = 'SHA-256';
-  modulusLength  = 2048;
+  hashAlgorithm  = 'SHA-512';
+  modulusLength  = 4096;
   publicExponent = new Uint8Array([1, 0 , 1]);
   ivLen = 16;
 

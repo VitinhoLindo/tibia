@@ -90,6 +90,15 @@ class Crypto extends CryptoUtil {
       false, ['encrypt']
     );
   }
+
+  getHash() {
+    return this.crypto.createHash(this.serverHash);
+  }
+
+  hash(value = '') {
+    let hash = this.getHash();
+    return hash.update(value).digest('hex');
+  }
 }
 
 module.exports = Crypto;

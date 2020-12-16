@@ -1,6 +1,6 @@
-const crypto = require('crypto');
-
 class UUID {
+  crypto = require('crypto');
+
   constructor() {}
 
   generate() {
@@ -12,13 +12,13 @@ class UUID {
 
       switch (x) {
         case 0:
-          rs = crypto.randomBytes(4); break;
+          rs = this.crypto.randomBytes(4); break;
         case 1:
         case 2:
         case 3:
-          rs  = crypto.randomBytes(2); break;
+          rs = this.crypto.randomBytes(2); break;
         case 4:
-          rs = crypto.randomBytes(6); break;
+          rs = this.crypto.randomBytes(6); break;
       }
 
       for(let _r of rs) r += (`00${_r.toString(16)}`).slice(-2);
@@ -27,6 +27,10 @@ class UUID {
     }
 
     return uuid;
+  }
+
+  static instance() {
+    return new UUID();
   }
 }
 

@@ -1,6 +1,6 @@
-const Cache = require('./Cache');
+const Translate = require('./Translate');
 
-class CryptoUtil extends Cache {
+class CryptoUtil extends Translate {
   constructor() { super(); }
 
   binaryToHex(binary = new ArrayBuffer()) {

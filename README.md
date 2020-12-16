@@ -303,3 +303,7 @@ ssl-ca=/var/lib/mysql/ca.pem
 ssl-cert=/var/lib/mysql/client-cert.pem
 ssl-key=/var/lib/mysql/client-key.pem
 </pre>
+
+<pre>
+$ sudo setcap 'cap_net_bind_service=+ep' `which node`
+</pre>

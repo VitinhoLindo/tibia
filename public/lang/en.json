@@ -1,3 +1,7 @@
 {
-  
+  "en": "English (USA)",
+  "pt-BR": "Português (Brasil)",
+
+  "LOGIN-APP-LABEL": "sing-in",
+  "REGISTER-APP-LABEL": "register"
 }

@@ -11,7 +11,22 @@ class Login extends BaseModelSql {
     'updated_at'
   ]
 
+  timestamp = true;
+
+  relation = {
+    forgotem: require('./Forgotem'),
+    entrycode: require('./Entrycode')
+  }
+
   constructor() { super(); }
+
+  forgotem() {
+    return this.hasMany(this.relation.forgotem, 'login');
+  }
+
+  entrycode() {
+    return this.hasMany(this.relation.entrycode, 'login');
+  }
 }
 
 module.exports = Login;

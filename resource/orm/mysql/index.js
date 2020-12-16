@@ -118,12 +118,29 @@ class OrmMysql extends Model {
   }
 
   async insert(data) {
-    
+    let query = this.build.insertQuery(this.table, data, this.timestamp);
+    let result = await this.client.executeQuery(query);
+    data.id = result.insertId;
+    return Collection.instance([data], this.constructor).first();
   }
 
-  static async insert() {}
+  static async insert(data) {
+    let model = new this();
+    return await model.insert(data);
+  }
 
-  async save() {}
+  async save() {
+    let [query, data] = this.build.updateQuery(this.table, this.toJSON(), this.timestamp);
+    await this.client.executeQuery(query);
+    for(let key in data) this[key] = data[key];
+    return this;
+  }
+
+  async delete() {
+    let query  = this.build.deleteQuery(this.table, this.toJSON());
+    await this.client.executeQuery(query);
+    return true;
+  }
 }
 
 module.exports = OrmMysql;

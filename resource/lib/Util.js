@@ -4,9 +4,21 @@ class Util extends Modules {
   constructor() { super(); }
 
   typeof(value) {
-    if (value == undefined || value == null) return 'Null';
+    if (value == undefined || value == null) return 'Nullable';
 
     return value.constructor.name;
+  }
+
+  arrayInfo(array = []) {
+    return {
+      initial: 0,
+      final: (array.length) ? array.length - 1 : 0
+    }
+  }
+
+  randomArrayValue(array = []) {
+    let info = this.arrayInfo(array);
+    return array[this.randomNumber(info.initial, info.final)];
   }
 
   inArray(value, array = []) {

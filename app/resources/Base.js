@@ -1,33 +1,30 @@
-const express = require('express');
-const http = require('../../http');
+const BaseHttp = require('../../resource/http/BaseHttp')
 
-class Base {
-  request  = express.request;
-  response = express.response;
-  app      = http();
-
+class Base extends BaseHttp {
+  model = null;
   autentication = false;
+
   page = { 
     class: 'form-table',
     singular: '',
-    plural: ''
+    plural: '',
+    resource: ''
   };
 
   constructor(request, response) {
-    this.request = request;
-    this.response = response;
-    this.app = request.getApp();
+    super(request, response);
     this.build();
   }
 
   build() {
     let singular = this.constructor.name;
+    this.page.resource = this.constructor.name.toLowerCase();
     singular = `${singular[0].toUpperCase()}${singular.substr(1).toLowerCase()}`;
-
     let plural = singular;
 
+
     this.page.singular = singular;
-    this.page.plural = plural;
+    this.page.plural   = plural;
   }
 
   changeClass(value) {
@@ -46,6 +43,22 @@ class Base {
 
   getPage() {
     return this.page;
+  }
+
+  async get() {
+
+  }
+
+  async post() {
+
+  }
+
+  async put() {
+
+  }
+
+  async delete() {
+
   }
 }
 

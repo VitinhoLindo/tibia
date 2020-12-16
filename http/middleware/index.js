@@ -6,15 +6,40 @@ class Middlaware {
     interval: 60000,
     cache: {}
   }
+  defaultRequestHeader = [
+    { header: 'Authentication', attribute: 'token' }, 
+    { header: 'language', attribute: 'lang', default: 'serverLang' }
+  ];
   defaultResponseHeader = {
     'Server': 'Nodejs'
   }
   routeRules = {}
+  app = require('../../http')()
 
-  constructor() { }
+  constructor(app) { 
+    this.app = app;
+  }
 
   currentTime(date = new Date()) {
     return date.getTime();
+  }
+
+  default(request = express.request, response = express.response, next) {
+    request.getApp = () => {
+      return this.app;
+    }
+    return;
+  }
+
+  readHeaders(request = express.request, response = express.response, next) {
+    this.default(request, response, next);
+
+    for(let optionHeader of this.defaultRequestHeader) {
+      let value = request.headers[optionHeader.header] || null;
+      request[optionHeader.attribute] = value;
+      if (!value && optionHeader.default)
+        request[optionHeader.attribute] = this.app[optionHeader.default];
+    }
   }
 
   serverError() {
@@ -29,6 +54,7 @@ class Middlaware {
 
   setDefaultResponseHeader(value = {}) {
     this.defaultResponseHeader = Object.assign(this.defaultResponseHeader, value);
+    return this;
   }
 
   openToRequest(remoteAddress = '') {
@@ -50,6 +76,7 @@ class Middlaware {
   }
 
   getUrl(url = '/') {
+    url = url.search(/\?/g) >= 0 ? url.split(/\?/g)[0] : url
     return url.toLowerCase();
   }
 
@@ -92,6 +119,7 @@ class Middlaware {
 
   setMaxRequests(value) {
     this.options.maxRequest = parseInt(value) || 20;
+    return this;
   }
 
   setTimeListenUsingMinute(time = 1) {
@@ -99,17 +127,25 @@ class Middlaware {
     time = this.getMillisecondsUsingSecond(time);
 
     this.options.interval = time;
+    return this;
   }
 
   listen() {
     setInterval(() => {
       this.clearCache();
     }, this.options.interval);
+    return this;
   }
 
   validate(request = express.request, response = express.response, next) {
     try {
-      let url = this.getUrl(request.url.search(/\?/g) >= 0 ? request.url.split(/\?/g)[0] : request.url);
+      // read default langs, class attribute defaultRequestHeader
+      this.readHeaders(request, response, next);
+
+      // if exists query split and return url else return url
+      let url = this.getUrl(request.url);
+
+      // request method
       let method = this.getMethod(request.method);
 
       for(let key in this.defaultResponseHeader) response.setHeader(key, this.defaultResponseHeader[key]);
@@ -126,6 +162,7 @@ class Middlaware {
       if (rule[method]) {
         
       }
+
       if (rule.functions) {
         for (let _func of rule.functions) {
           if (_func.method = method) {
@@ -140,8 +177,8 @@ class Middlaware {
     }
   }
 
-  static get() {
-    return new Middlaware();
+  static get(app) {
+    return new Middlaware(app);
   }
 }
 

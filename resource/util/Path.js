@@ -12,6 +12,7 @@ const defaults = {
   video: 'video/',
   ssl: 'ssl/',
   lang: 'lang/',
+  mailer: 'mail/'
 };
 
 const windows = {
@@ -28,6 +29,7 @@ const windows = {
   video: 'video\\',
   ssl: 'ssl\\',
   lang: 'lang\\',
+  mailer: 'mail\\'
 };
 
 const linux = defaults;
@@ -109,6 +111,12 @@ class Path {
     let path = this.publicDir();
     path = `${path}${this.dirs.lang}`;
     return (file) ? `${path}${file}` : path;
+  }
+
+  publicMailerDir(file) {
+    let path = this.publicDir();
+    path = `${path}${this.dirs.mailer}`;
+    return file ? `${path}${file}` : path;
   }
 }
 

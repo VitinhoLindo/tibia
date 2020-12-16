@@ -20,17 +20,17 @@ class JWT extends Variables {
   }
 
   subject(sub = "", jti = "") {
-    if (!jti) jti = (new UUID).generate();
+    if (!jti) jti = UUID.instance().generate();
 
     this.sub = sub;
     this.jti = jti;
     return this;
   }
 
-  issuer(iss = "") {
-    this.iss = iss;
-    return this;
-  }
+  // issuer(iss = "") {
+  //   this.iss = iss;
+  //   return this;
+  // }
 
   setTime(arg = { expHour: 0, expMinute: 0, expSeconds: 0}) {
     let date = new Date();
@@ -75,6 +75,20 @@ class JWT extends Variables {
     let certificate = await app.encrypt(`${header}.${payload}`);
 
     return `${header}.${payload}.${certificate}`;
+  }
+
+  // async validate(token) {
+
+  // }
+
+  async readToken(token = '', app) {
+    let [header, payload, cerficate] = token.split(/\./g);
+
+    console.log(header, payload, cerficate);
+  }
+
+  static instance() {
+    return new JWT();
   }
 }
 

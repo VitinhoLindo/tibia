@@ -1,4 +1,4 @@
-const LoginService = require('../service/LoginService')
+const LoginService = require('../service/LoginService');
 
 class LoginController extends LoginService {
   constructor(request, response) { super(request, response) }
@@ -10,26 +10,59 @@ class LoginController extends LoginService {
   async option() {
     return this.defaultResponseJSON();
   }
-
+  
   async get() {
     try {
-      // let JWT = new (this.app.JWT)();
-
-      // let jwt = await JWT.issuer(this.request.socket.localAddress)
-      //                    .setTime({ expMinute: 5 })
-      //                    .subject(this.request.socket.remoteAddress)
-      //                    .generate(this.app);
-
-      // let logins = await Login.get();
-      // return this.defaultResponseJSON({ result: { data: logins.toArrayJSON(), jwt: [jwt, _jwt] } });
+      let cache = this.app.find(this.request.socket.remoteAddress);
+      if (!cache && !cache.auth) throw { code: 404, message: 'don\'t found' };
+      return this.defaultResponseJSON({ result: { auth: cache.auth } });
     } catch (error) {
-      console.log(error);
       return this.sendError(error);
     }
   }
 
   async post() {
-    return this.defaultResponseJSON();
+    let all = this.all();
+
+    try {
+      try {
+        all = await this.ecp_dcp_value(all, 'decrypt');
+      } catch (error) {
+        throw { code: 500, message: 'failure in decrypt or encrypt data', result: { expiredCrypto: true } };        
+      }
+      
+      let validator = this.Validator.make({
+        login: 'required|string',
+        senha: 'required|string',
+        code:  'interger'
+      })
+
+      if (validator.fails()) {
+        let model = validator.modelResponse();
+        model.result = this.ecp_dcp_value(model.result, 'encrypt');
+        throw model;
+      }
+
+      if (!all.code) {
+        return await this.sendCode(all.login, all.senha);
+      } else if (all.code) {
+        return await this.singIn(all.login, all.senha, all.code);
+      } else {
+        return this.defaultResponseJSON({ 
+          code: 400, 
+          message: 'bad request', 
+          result: { 
+            error: { 
+              login: 'login is required',
+              senha: 'senha is required'
+            }
+          }
+        });
+      }
+
+    } catch (error) {
+      return this.sendError(error);
+    }
   }
 
   async put() {
