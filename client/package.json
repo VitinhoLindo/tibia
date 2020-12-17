@@ -1,0 +1,44 @@
+{
+  "name": "tibia",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VitinhoLindo/tibia.git"
+  },
+  "keywords": [
+    "nodejs",
+    "vuejs",
+    "javascript",
+    "tibia"
+  ],
+  "author": "victorpsf2@hotmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VitinhoLindo/tibia/issues"
+  },
+  "homepage": "https://github.com/VitinhoLindo/tibia#readme",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.0.0-0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "node-sass": "^5.0.0",
+    "sass-loader": "^10.0.5"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

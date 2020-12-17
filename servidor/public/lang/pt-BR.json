@@ -1,0 +1,24 @@
+{
+  "en": "English (USA)",
+  "pt-BR": "Português (Brasil)",
+
+  "LOGIN-APP-LABEL": "entrar",
+  "REGISTER-APP-LABEL": "registar-se",
+
+  "LOGIN-EMAIL-LABEL": "e-mail",
+  "LOGIN-PASS-LABEL": "senha",
+  "LOGIN-FORGOTEM-LABEL": "esqueci a senha",
+  "LOGIN-CODE-LABEL": "codigo",
+
+  "LABEL_USER_RESOURCE": "Usuário",
+  "LABEL_USERS_RESOURCE": "Usuários",
+
+  "FORGOTEM-APP-LABEL": "recuperar",
+  "FORGOTEM-PASS-LABEL": "confirmar",
+
+  "BACK-LABEL": "voltar",
+  "SUBMIT-LABEL": "enviar",
+
+  "CANCEL-LABEL": "cancelar",
+  "SING-LABEL": "logar"
+}

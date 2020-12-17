@@ -1,0 +1,103 @@
+const Variables = require('../lib/Variables');
+const UUID      = require('./UUID');
+
+class JWT extends Variables {
+  iss = '';
+  alg = '';
+  typ = '';
+
+  sub  = '';
+  iat  = 0;
+  exp  = 0;
+  jti  = "";
+
+  constructor() { super(); }
+
+  setHeader() {
+    this.alg = this.encryptCipher;
+    this.typ = "JWT";
+    return this;
+  }
+
+  subject(sub = "", jti = "") {
+    if (!jti) jti = UUID.instance().generate();
+
+    this.sub = sub;
+    this.jti = jti;
+    return this;
+  }
+
+  // issuer(iss = "") {
+  //   this.iss = iss;
+  //   return this;
+  // }
+
+  setTime(arg = { expHour: 0, expMinute: 0, expSeconds: 0}) {
+    let date = new Date();
+    this.iat = date.getTime();
+
+    if (arg.expHour) {
+      date.setHours(date.getHours() + (parseInt(arg.expHour) || 0));
+    }
+
+    if (arg.expMinute) {
+      date.setMinutes(date.getMinutes() + (parseInt(arg.expMinute) || 0));
+    }
+
+    if (arg.expSeconds) {
+      date.setSeconds(date.getSeconds() + (parseInt(arg.expSeconds) || 0));
+    }
+
+    this.exp = date.getTime();
+    return this;
+  }
+
+  getHeader() {
+    return {
+      alg: this.alg,
+      typ: this.typ
+    };
+  }
+
+  getPayload() {
+    return {
+      sub: this.sub,
+      jti: this.jti,
+      iat: this.iat,
+      exp: this.exp
+    };
+  }
+
+  async generate(app) {
+    let header      = app.stringToBase64(JSON.stringify(this.getHeader()));
+    let payload     = app.stringToBase64(JSON.stringify(this.getPayload()));
+    let certificate = await app.encrypt(`${header}.${payload}`);
+    return `${header}.${payload}.${Buffer.from(certificate, 'hex').toString('base64')}`;
+  }
+
+  static instance() {
+    return new JWT();
+  }
+
+  async validate(app, token) {
+    if (!token) return false;
+    token = token.replace('Bearer ', '');
+
+    try {
+      let [header, payload, certificate] = token.split(/\./g);
+      let _certificate = await app.encrypt(`${header}.${payload}`);
+
+      header      = JSON.parse(app.base64ToString(header));
+      payload     = JSON.parse(app.base64ToString(payload));
+      certificate = app.base64ToHex(certificate);
+      if (certificate != _certificate) return false;
+
+      
+      // console.log(header, payload, certificate);
+    } catch (error) {
+      return false;
+    }
+  }
+}
+
+module.exports = JWT;
