@@ -300,7 +300,6 @@ export default {
 
         if (!this.controller.code) this.codeListen(true);
         else {
-          console.log(result);
           this.$app.authentication(result.auth);
           this.clearData();
         }

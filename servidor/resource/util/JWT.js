@@ -1,6 +1,43 @@
 const Variables = require('../lib/Variables');
 const UUID      = require('./UUID');
 
+class ValidatorResponse {
+  header = {
+    alg: '',
+    typ: ''
+  };
+
+  payload = {
+    sub: '',
+    jti: '',
+    iat: 0,
+    exp: 0
+  }
+
+  certificate = {
+    header: {
+      alg: '',
+      typ: ''
+    },
+    payload: {
+      sub: '',
+      jti: '',
+      iat: 0,
+      exp: 0
+    }
+  }
+
+  constructor(header, payload, certificate) {
+    this.header      = header;
+    this.payload     = payload;
+    this.certificate = certificate;
+  }
+
+  static instance(header, payload, certificate) {
+    return new ValidatorResponse(header, payload, certificate);
+  }
+}
+
 class JWT extends Variables {
   iss = '';
   alg = '';
@@ -26,11 +63,6 @@ class JWT extends Variables {
     this.jti = jti;
     return this;
   }
-
-  // issuer(iss = "") {
-  //   this.iss = iss;
-  //   return this;
-  // }
 
   setTime(arg = { expHour: 0, expMinute: 0, expSeconds: 0}) {
     let date = new Date();
@@ -79,8 +111,8 @@ class JWT extends Variables {
     return new JWT();
   }
 
-  async validate(app, token) {
-    if (!token) return false;
+  async validate(app, token, extract = false) {
+    if (!token) return (extract) ? null: false;
     token = token.replace('Bearer ', '');
 
     try {
@@ -90,13 +122,48 @@ class JWT extends Variables {
       header      = JSON.parse(app.base64ToString(header));
       payload     = JSON.parse(app.base64ToString(payload));
       certificate = app.base64ToHex(certificate);
-      if (certificate != _certificate) return false;
 
-      
-      // console.log(header, payload, certificate);
+      if (!extract) {
+        if (certificate != _certificate) return false;
+        else return true;
+      } else {
+        if (certificate != _certificate) return null;
+        let certificated = await this.app.decrypt(certificate);
+        let [_header, _payload] = certificated.split('.');
+
+        return ValidatorResponse.instance(header, payload, { header: _header, payload: _payload });
+      }
     } catch (error) {
-      return false;
+      return (extract) ? null: false;
     }
+  }
+
+  expiration(app = ValidatorResponse.instance(), server = ValidatorResponse.instance()) {
+    let validated   = true;
+    let headerKeys  = Object.keys(server.header);
+    let payloadKeys = Object.keys(server.payload);
+    let currentDate = new Date();
+
+    for(let key of headerKeys)
+      if (app.header[key] != server.header[key]) 
+        validated = false;
+      else if (app.certificate.header[key] != server.certificate.header[key])
+        validated = false;
+      else if (app.certificate.header[key] != server.header[key])
+        validated = false;
+
+    for(let key of payloadKeys)
+      if (app.payload[key] != server.payload[key]) 
+        validated = false;
+      else if (app.certificate.payload[key] != server.certificate.payload[key])
+        validated = false;
+      else if (app.certificate.payload[key] != server.payload[key])
+        validated = false;
+
+    if (!validated) return true;
+
+    let expiration = new Date(server.payload.exp);
+    return (currentDate > expiration) ? true: false;
   }
 }
 

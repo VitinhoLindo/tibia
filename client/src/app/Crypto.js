@@ -4,7 +4,6 @@ class Crypto extends CryptoUtil {
   constructor() { super(); }
 
   async generateKeys() {
-    console.log(this.modulusLength);
     let { publicKey, privateKey } = await this.crypto.subtle.generateKey({
       name: this.keyAlgorithm,
       hash: this.hashAlgorithm,
@@ -56,27 +55,22 @@ class Crypto extends CryptoUtil {
         nextIndex += 1024;
 
         try {
-
-          let a  = this.hexToBinary(_v);
-          console.log(a);
           let buffer = await this.crypto.subtle.decrypt({
             name: this.keyAlgorithm,
             hash: this.hashAlgorithm,
             iv: iv
-          }, this.getDecryptKey(), this.hexToBinary(_v));
+          }, privateKey, this.hexToBinary(_v));
 
           decryptBuffers.push(new Uint8Array(buffer));
           breakDecrypt = true;
-        } catch (error) {
-          console.error(error);
-          break;
-        }
+        } catch (error) { break; }
       }
 
-      if (decryptBuffers) break;
+      if (breakDecrypt) break;
     }
 
-    return this.binaryToString(this.concatBuffer(decryptBuffers));
+    if (decryptBuffers.length) return this.binaryToString(this.concatBuffer(decryptBuffers));
+    else throw 'failure in decrypt data';
   }
 
   async encrypt(value = '') {

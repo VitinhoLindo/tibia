@@ -65,7 +65,6 @@ export default {
         method: 'get'
       });
 
-      console.log(result);
       this.panels = result;
     },
     menushow(event) {

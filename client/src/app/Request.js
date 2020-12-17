@@ -132,14 +132,17 @@ class Request extends Crypto {
   }
 
   async authentication(auth) {
-    console.log(auth);
     if (!auth) {
       let { code, message, result, status } = await this.request({
         url: '/login',
         method: 'get',
+        encrypt: true
       });
 
-      if (status == 'error') return console.error(message);
+      if (status == 'error') {
+        this.defaultHeaders['Authentication'] = '';
+        return console.error(message);
+      } 
 
       auth = result.auth;
     }

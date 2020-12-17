@@ -18,19 +18,26 @@ class BaseHttp extends HttpUtil {
     return all;
   }
 
-  _user() {
+  async user() {
     let token = this.request.token;
+    let cache = this.app.find(this.request.socket.remoteAddress)
 
-    if (!token) return null;
-    let jwt = new (this.app.JWT)();
-    // console.log(jwt);
-    // return this.app.getUser(this.request);
+    if (!token || !cache || !cache.auth) return null;
+    let [user, server] = await Promise.all([
+      this.app.JWT.instance().validate(this.app, token, true),
+      this.app.JWT.instance().validate(this.app, cache.auth, true)
+    ]);
+
+    let expirated = this.app.JWT.instance().expiration(user, server);
+
+    if (expirated) return null;
+    else           return server.payload.sub;
   }
 
   async auth() {
     let token = this.request.token;
     let jwt   = await this.app.JWT.instance().validate(this.app, token);
-    return !!jwt;
+    return jwt;
   }
 
   setStatus(code) {
