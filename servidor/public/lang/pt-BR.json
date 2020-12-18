@@ -18,7 +18,12 @@
 
   "BACK-LABEL": "voltar",
   "SUBMIT-LABEL": "enviar",
+  "SAVE-LABEL": "Salvar",
 
   "CANCEL-LABEL": "cancelar",
-  "SING-LABEL": "logar"
+  "SING-LABEL": "logar",
+  
+  "ABOUT-H1-LABEL": "Devido respeito aos players que ajudaram na criação deste site",
+  "ABOUT-SUPORT-LABEL": "Grande prazer de ter o nome de cada um deles aqui"
+
 }

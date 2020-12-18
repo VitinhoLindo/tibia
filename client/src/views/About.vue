@@ -1,5 +1,14 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
   </div>
 </template>
+
+<script>
+import BaseMixin from '../mixins/basemixin'
+import LangMixin from '../mixins/langmixin'
+
+export default {
+  name: 'About',
+  mixins: [BaseMixin, LangMixin]
+}
+</script>

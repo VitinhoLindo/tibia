@@ -2,9 +2,10 @@
   <div>
     <menu-site v-bind:auth="auth" />
 
+    <perfil-app v-if="auth" />
     <login-app v-if="!auth" />
 
-    <div>
+    <div class="content-app">
       <router-view />
     </div>
   </div>
@@ -29,6 +30,7 @@ export default {
     }
   },
   mounted() {
+    this.$app.authentication();
     this.$app.on(this.appTag, this.authenticated, this.listenCallback)
   },
   unmounted() {
@@ -63,6 +65,15 @@ body,
   color: #ffffff;
 }
 
+.content-app {
+  position: absolute;
+  top: 35px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 35px);
+  text-align: center;
+}
+
 .btn-frist {
   cursor: pointer;
   color: #ffffff;
@@ -89,5 +100,64 @@ body,
 
 .btn-danger:focus {
   outline: 0;
+}
+
+.btn {
+  min-width: 100px;
+  min-height: 40px;
+  margin: 0px 5px;
+  border: none;
+  -webkit-border-radius: 5px;
+}
+
+.field {
+  margin: 2.5px 0px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.field .content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.field .content label {
+  min-width: 25%;
+  font-size: 18px;
+  text-align: center;
+}
+
+.field .content input {
+  padding: 5px;
+  width: 60%;
+  font-size: 18px;
+  border: none;
+  -webkit-border-radius: 5px;
+  box-shadow: 0px 0px 2px 0px #95a5a6;
+}
+
+.field .content input:focus {
+  outline: 0;
+  box-shadow: 0px 0px 4px 0px #3498db;
+}
+
+.field .complement .info {
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  padding: 2.5px;
+  color: #cccccc;
+}
+.field .complement .error {
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  padding: 2.5px;
+  color: #e74c3c;
 }
 </style>

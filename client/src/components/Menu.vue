@@ -17,6 +17,12 @@
       >{{ labels[panel.singular] }}</button>
 
       <button 
+        v-if="auth" 
+        class="btn" 
+        v-on:click="openForm('system-user')"
+      >{{ labels['LABEL_USER_RESOURCE'] }}</button>
+
+      <button 
         v-if="!auth" 
         class="btn" 
         v-on:click="openForm('system-login')"

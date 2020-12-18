@@ -5,7 +5,7 @@ class Entrycode extends BaseModelSql {
 
   fields = [
     'id',
-    'login',
+    'login_id',
     'code',
     'usaged_at',
     'created_at',
@@ -18,9 +18,15 @@ class Entrycode extends BaseModelSql {
 
   timestamp = true;
 
-  relation = {};
+  relation = {
+    login: require('./Login')
+  };
 
   constructor() { super(); }
+
+  login() {
+    return this.belongsTo(this.relation.login, 'login_id');
+  }
 }
 
 module.exports = Entrycode;

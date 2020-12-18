@@ -1,13 +1,13 @@
 const BaseModelSql = require('./BaseModelSql');
 
-class User extends BaseModelSql {
-  table = 'user';
+class Npc extends BaseModelSql {
+  table = 'npc';
 
   fields = [
     'id',
-    'cpf',
-    'login_id',
     'profile_id',
+    'location_id',
+    'name',
     'created_at',
     'updated_at'
   ];
@@ -19,14 +19,14 @@ class User extends BaseModelSql {
   timestamp = true;
 
   relation = {
-    login: require('./Login'),
-    file : require('./File')
+    location: require('./Location'),
+    file: require('./File')
   };
 
   constructor() { super(); }
 
-  login() {
-    return this.belongsTo(this.relation.login, 'login_id');
+  location() {
+    return this.belongsTo(this.relation.location, 'location_id');
   }
 
   profile() {
@@ -34,4 +34,4 @@ class User extends BaseModelSql {
   }
 }
 
-module.exports = User;
+module.exports = Npc;

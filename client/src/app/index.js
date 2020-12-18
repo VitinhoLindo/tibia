@@ -7,7 +7,6 @@ class App extends Translate {
     await this.getLanguages();
     await this.setLanguage(this.get('language') || this.navigatorLanguage());
     await this.sync();
-    await this.authentication();
   }
 }
 

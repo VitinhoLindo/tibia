@@ -3,5 +3,9 @@
   "pt-BR": "Português (Brasil)",
 
   "LOGIN-APP-LABEL": "sing-in",
-  "REGISTER-APP-LABEL": "register"
+  "REGISTER-APP-LABEL": "register",
+
+
+  "ABOUT-H1-LABEL": "Compliance with respect for the players who helped create this site",
+  "ABOUT-SUPORT-LABEL": "Great pleasure to have the name of each one of them here"
 }
