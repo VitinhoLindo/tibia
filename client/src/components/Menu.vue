@@ -1,5 +1,9 @@
 <template>
   <div class="menu">
+
+    <div v-if="auth && src" class="perfil-user">
+      <img v-bind:src="src">
+    </div>
     <svg-button v-on:click="menushow" />
 
     <div v-if="show" class="options" v-on:mouseleave="menushow">
@@ -40,10 +44,17 @@ import LangMixin from '../mixins/langmixin';
 export default {
   name: 'Menu',
   mixins: [BaseMixin, LangMixin],
+  watch: {
+    auth: function (_n, _l) {
+      if (!_n) return;
+      this.setSrc();
+    }
+  },
   props: {
     auth: {
       type: Boolean,
       required: true,
+      default: false
     }
   },
   components: {
@@ -61,7 +72,8 @@ export default {
       options: null,
       show: false,
       panels: [],
-      menuTag: 'authentication'
+      menuTag: 'authentication',
+      src: ''
     }
   },
   methods: {
@@ -83,6 +95,23 @@ export default {
     callbackListen(err, pid) {
       if (err) return console.error(err);
       this.addListener({ listiner: this.menuTag, pid: pid });
+    },
+    async setSrc() {
+      let { message, code, result, status } = await this.$app.request({
+        url: '/user',
+        method: 'get',
+        params: { profile: true, cpf: false }
+      });
+
+      let buffer = await this.$app.hexToBinary(result.profile.binary);
+
+      try {
+        this.src = `data:${result.profile.mimeType};base64,${this.$app.binaryToBase64(new Uint8Array(buffer))}`
+        console.log(this.src);
+        
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 }
@@ -99,6 +128,22 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
+}
+
+.menu .perfil-user {
+  position: absolute;
+  top: 0px;
+  left: 5px;
+  height: 30px;
+  width: 30px;
+  padding: 2.5px;
+}
+
+.menu .perfil-user img {
+  box-shadow: 0px 0px 1px 0px #ffffff;
+  -webkit-border-radius: 50%;
+  width: 30px;
+  height: 30px;
 }
 
 .menu .btn-svg {
@@ -159,14 +204,4 @@ export default {
 .menu .options .btn:focus {
   outline: 0;
 }
-
-@media only screen and (max-width: 768px) {
-  .menu {
-    height: 35px;
-  }
-
-  .menu .options {
-    top: 35px;
-  }
-} 
 </style>

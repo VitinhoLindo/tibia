@@ -8,11 +8,7 @@ class Http extends Config {
     const config = this.listenConfig();
     const app    = this.express();
 
-    // try {
-    //   console.log(this.crypto.constants.RSA_NO_PADDING);
-    // }catch(e) {
-    //   console.log(e);
-    // }
+    this.setRequestFileLength();
     this.readTranslates();
     Route(this, app);
 

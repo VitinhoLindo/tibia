@@ -18,9 +18,11 @@ CREATE TABLE `login` (
   `nick` LONGTEXT,
   `email` LONGTEXT NOT NULL,
   `senha` LONGTEXT NOT NULL,
+  `user_id` BIGINT,
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME,
-  PRIMARY KEY(`id`)
+  PRIMARY KEY(`id`),
+  FOREIGN KEY(`user_id`) REFERENCES `user`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `forgotem`;
@@ -63,12 +65,10 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
 	`id` BIGINT AUTO_INCREMENT,
   `cpf` LONGTEXT NOT NULL,
-  `login_id` BIGINT NOT NULL,
   `profile_id` BIGINT,
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME,
   PRIMARY KEY(`id`),
-  FOREIGN KEY(`login_id`) REFERENCES `login`(`id`),
   FOREIGN KEY(`profile_id`) REFERENCES `file`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

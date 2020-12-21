@@ -26,7 +26,7 @@ class User extends BaseModelSql {
   constructor() { super(); }
 
   login() {
-    return this.belongsTo(this.relation.login, 'login_id');
+    return this.hasMany(this.relation.login, 'user_id');
   }
 
   profile() {

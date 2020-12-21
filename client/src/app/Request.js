@@ -45,13 +45,23 @@ class Request extends Crypto {
 
   async params(params = {}, encrypt = false) {
     let data = Object.assign({}, params);
-    if (encrypt) data = await this.ecp_dcp_value(data, 'encrypt');
+
+    if (encrypt) {
+      this.emit('loading-message', { message: 'ENCRYPT-LABEL' });
+      data = await this.ecp_dcp_value(data, 'encrypt');
+    }
+
     return data;
   }
 
   async data(data = {}, encrypt = false) {
     let body = Object.assign({}, data);
-    if (encrypt) body = await this.ecp_dcp_value(body, 'encrypt');
+
+    if (encrypt) {
+      this.emit('loading-message', { message: 'ENCRYPT-LABEL' });
+      body = await this.ecp_dcp_value(body, 'encrypt');
+    }
+
     return body;
   }
 
@@ -71,12 +81,13 @@ class Request extends Crypto {
       });
 
       if (data.result.expiredCrypto) {
+        this.emit('loading-message', { message: 'SYNC-RSA-LABEL' });
         await this.sync({ build: true });
 
         if (!option.count) {
           option.count = 1;
         }
-        else if (option.count == 5) {
+        else if (option.count == 2) {
           throw 'error in request'
         }
         else {
@@ -87,7 +98,12 @@ class Request extends Crypto {
         return await this.request(option);
       }
 
+      if (data.result.authentication) {
+        this.authentication();
+      }
+
       if (option.encrypt) {
+        this.emit('loading-message', { message: 'DECRYPT-LABEL' });
         data.result = await this.ecp_dcp_value(data.result, 'decrypt');
       }
 
@@ -141,6 +157,7 @@ class Request extends Crypto {
 
       if (status == 'error') {
         this.defaultHeaders['Authentication'] = '';
+        this.emit('authentication', false);
         return console.error(message);
       } 
 

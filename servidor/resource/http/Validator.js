@@ -40,11 +40,16 @@ const isArray = (value) => {
   return bool;
 }
 
+const isObject = (value) => {
+  if (!dataExists()) return false;
+  if (isString(value)) try {
+    value = JSON.parse(value);
+  } catch (error) {}
+  return (_value.constructor.name == 'Object') ? true : false;
+}
+
 const dataExists = (value) => {
-  if (value == undefined) return false;
-  if (value == null) return false;
-  if (!value) return false;
-  return true;
+  return (((value || null) == null)) ? false : true;
 }
 
 const lenValue = (rule, value, opt) => {
@@ -173,6 +178,8 @@ class Validator {
         if (!isEmail(data))                 return { failed: true, rule: rule, ruleMessage: `not email format` };
       } else if (rule == 'array')         {
         if (!isArray(data))                 return { failed: true, rule: rule };
+      } else if (rule == 'object')        {
+        if (!isObject(data))                return { failed: true, rule: rule };
       } else if (/^min\:\d+$/.test(rule)) {
         if (!lenValue(rule, data, 'min'))   return { failed: true, rule: rule };
       } else if (/^max\:\d+$/.test(rule)) {

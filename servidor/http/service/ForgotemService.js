@@ -23,7 +23,7 @@ class ForgotemService extends Base {
   getForgotemData(value = new (this.login)) {
     let code = this.app.randomNumber(this.minCodeLength, this.maxCodeLength);
     return {
-      login: value.id,
+      login_id: value.id,
       code : code
     }
   }

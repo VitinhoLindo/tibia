@@ -136,7 +136,6 @@ class Build {
 
   updateQuery(table = '', data = {}, timestamp = false) {
     data = this.timestampData(data, timestamp);
-    const id = data.id;
     this.setWhere({ column: 'id', value: data.id });
     delete data.id;
 
@@ -152,8 +151,7 @@ class Build {
       else { query += `, ${field} = ${value}`; }
     }
 
-    data.id = id;
-    return [`UPDATE \`${table}\` ${query} ${this.getWhere()};`, data];
+    return `UPDATE \`${table}\` ${query} ${this.getWhere()};`;
   }
 
   deleteQuery(table = '', data = {}) {

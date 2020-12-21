@@ -76,7 +76,7 @@ class Crypto extends CryptoUtil {
   async encrypt(value = '') {
     let vector = this.getIv(), nextIndex = 0, encryptBuffers = [];
 
-    if (nextIndex < value.length) {
+    while(nextIndex < value.length) {
       let _v = '';
 
       if (_v + 256 < value.length) _v = value.substr(nextIndex, 256);
@@ -87,7 +87,7 @@ class Crypto extends CryptoUtil {
         name: this.keyAlgorithm,
         hash: this.hashAlgorithm,
         iv: vector
-      }, this.getEncryptKey(), this.stringToBinary(value));
+      }, this.getEncryptKey(), this.stringToBinary(_v));
 
       encryptBuffers.push(new Uint8Array(buffer));
     }

@@ -47,6 +47,14 @@ class Storage extends Util {
       };
     }
   }
+
+  setRequestFileLength() {
+    this.limitFileLength = parseInt(this.process.env.LIMIT_FILE_MB);
+  }
+
+  getRequestFileLength() {
+    return this.limitFileLength;
+  }
 }
 
 module.exports = Storage;

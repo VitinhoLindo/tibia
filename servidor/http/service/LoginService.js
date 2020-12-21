@@ -11,19 +11,19 @@ class LoginService extends Base {
 
   async sendLoginCode(email, code) {
     try {
-      // await this.app.sendMail({
-      //   from: email,
-      //   subject: 'Solicitação de login',
-      //   text: '',
-      //   html: '',
-      //   fileContent: 'utf8',
-      //   replace: {
-      //     type: 'html',
-      //     regexp: '@code@',
-      //     value: code
-      //   },
-      //   pathFile: this.app.path.publicMailerDir('loginCode.html')
-      // });
+      await this.app.sendMail({
+        from: email,
+        subject: 'Solicitação de login',
+        text: '',
+        html: '',
+        fileContent: 'utf8',
+        replace: {
+          type: 'html',
+          regexp: '@code@',
+          value: code
+        },
+        pathFile: this.app.path.publicMailerDir('loginCode.html')
+      });
     } catch (error) {
       throw { code: 500, message: 'failure in send e-mail', result: { error: { login: 'failure in send e-mail' } } }
     }
@@ -32,10 +32,9 @@ class LoginService extends Base {
   async sendCode(email, senha) {
     try {
       let login = await this.login.where({ column: 'email', value: this.app.hash(email) }).first();
-      
       if (!login) throw { code: 400, message: 'bad request', result: { error: { login: 'login ou senha incorreto' } } };
       if (login.senha != senha) throw { code: 400, message: 'bad request', result: { error: { login: 'email ou senha incorreto' } } };
-
+      
       let entrycode = await login.entrycode();
       entrycode     = entrycode.whereNot({ column: 'usaged_at' }).first();
       
@@ -46,9 +45,8 @@ class LoginService extends Base {
       }
 
       let code = this.app.randomNumber(this.minCodeLength, this.maxCodeLength);
-
       entrycode = await this.entrycode.insert({
-        login: login.id,
+        login_id: login.id,
         code: code
       });
 

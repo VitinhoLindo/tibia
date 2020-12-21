@@ -21,6 +21,9 @@ export default {
           console.error(error);
         }
       }
+    },
+    loading(bool = false, message = '') {
+      this.$app.emit('loading', { on: bool, message: '' });
     }
   }
 }

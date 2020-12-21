@@ -17,7 +17,7 @@ class File extends BaseModelSql {
 
   hash = [];
 
-  timestamp = false;
+  timestamp = true;
 
   relation = {};
 

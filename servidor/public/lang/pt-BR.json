@@ -9,6 +9,7 @@
   "LOGIN-PASS-LABEL": "senha",
   "LOGIN-FORGOTEM-LABEL": "esqueci a senha",
   "LOGIN-CODE-LABEL": "codigo",
+  "PERFIL-APP-LABEL": "Perfil",
 
   "LABEL_USER_RESOURCE": "Usuário",
   "LABEL_USERS_RESOURCE": "Usuários",
@@ -16,9 +17,16 @@
   "FORGOTEM-APP-LABEL": "recuperar",
   "FORGOTEM-PASS-LABEL": "confirmar",
 
+  "LOADING-LABEL": "carregando",
+  "ENCRYPT-LABEL": "encriptando",
+  "DECRYPT-LABEL": "decriptando",
+  "SYNC-RSA-LABEL": "sincronizando chave assimetrica",
+
   "BACK-LABEL": "voltar",
   "SUBMIT-LABEL": "enviar",
   "SAVE-LABEL": "Salvar",
+  "CPF-LABEL": "Cpf",
+  "IMAGE-LABEL": "Imagem",
 
   "CANCEL-LABEL": "cancelar",
   "SING-LABEL": "logar",

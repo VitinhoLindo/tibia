@@ -2,6 +2,7 @@
   <div>
     <menu-site v-bind:auth="auth" />
 
+    <app-loading />
     <perfil-app v-if="auth" />
     <login-app v-if="!auth" />
 
@@ -26,19 +27,28 @@ export default {
   data() {
     return {
       auth: false,
-      appTag: 'authentication'
+      appTag: 'authentication',
+      loadTag: 'app-loading-end'
     }
   },
   mounted() {
-    this.$app.authentication();
     this.$app.on(this.appTag, this.authenticated, this.listenCallback)
+    this.$app.on(this.loadTag, this.appLoaded, this.appLoadCallback);
   },
   unmounted() {
     this.removeListener({ listener: this.appTag });
+    this.removeListener({ listener: this.loadTag });
   },
   methods: {
     authenticated(auth) {
       this.auth = auth;
+    },
+    appLoaded() {
+      this.$app.emit('loading', { on: false, message: '' });
+    },
+    appLoadCallback(err, pid) {
+      if (err) return console.error(err);
+      this.addListener({ listener: this.loadTag, pid: pid });
     },
     listenCallback(err, pid) {
       if (err) return console.error(err);
@@ -110,7 +120,7 @@ body,
   -webkit-border-radius: 5px;
 }
 
-.field {
+.fields .field {
   margin: 2.5px 0px;
   width: 100%;
   display: flex;
@@ -119,20 +129,22 @@ body,
   align-items: center;
 }
 
-.field .content {
+.fields .field .content {
   width: 100%;
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
 }
 
-.field .content label {
+.fields .field .content label {
+  color: #000000;
   min-width: 25%;
   font-size: 18px;
   text-align: center;
 }
 
-.field .content input {
+.fields .field .content input[type=text] {
   padding: 5px;
   width: 60%;
   font-size: 18px;
@@ -141,23 +153,82 @@ body,
   box-shadow: 0px 0px 2px 0px #95a5a6;
 }
 
-.field .content input:focus {
+.fields .field .content input[type=email] {
+  padding: 5px;
+  width: 60%;
+  font-size: 18px;
+  border: none;
+  -webkit-border-radius: 5px;
+  box-shadow: 0px 0px 2px 0px #95a5a6;
+}
+
+.fields .field .content input[type=password] {
+  padding: 5px;
+  width: 60%;
+  font-size: 18px;
+  border: none;
+  -webkit-border-radius: 5px;
+  box-shadow: 0px 0px 2px 0px #95a5a6;
+}
+
+.fields .field .content input[type=file] {
+  padding: 5px;
+  width: 60%;
+  font-size: 18px;
+  border: none;
+}
+
+.fields .field .content .file {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.fields .field .content .file img {
+  max-width: 70px;
+  max-height: 70px;
+  margin: 5px;
+  -webkit-border-radius: 50%;
+}
+
+.fields .field .content input[type=text]:focus {
   outline: 0;
   box-shadow: 0px 0px 4px 0px #3498db;
 }
 
-.field .complement .info {
+.fields .field .content input[type=password]:focus {
+  outline: 0;
+  box-shadow: 0px 0px 4px 0px #3498db;
+}
+
+.fields .field .content input[type=email]:focus {
+  outline: 0;
+  box-shadow: 0px 0px 4px 0px #3498db;
+}
+
+.fields .field .complement .info {
   width: 100%;
   text-align: center;
   font-size: 12px;
   padding: 2.5px;
   color: #cccccc;
 }
-.field .complement .error {
+.fields .field .complement .error {
   width: 100%;
   text-align: center;
   font-size: 12px;
   padding: 2.5px;
   color: #e74c3c;
+}
+
+@media only screen and (max-width: 768px) {
+  .fields .field .content input[type=file] {
+    padding: 10px;
+    width: 60%;
+    font-size: 18px;
+    border: none;
+  }
 }
 </style>

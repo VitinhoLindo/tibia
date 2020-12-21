@@ -34,6 +34,8 @@ class Variables extends Event {
   publicExponent = new Uint8Array([0x01, 0x00 , 0x01]);
   ivLen = 16;
 
+  limitFileLength = 20000000;
+
   constructor() { super(); }
 }
 

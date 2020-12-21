@@ -18,7 +18,7 @@ class BaseHttp extends HttpUtil {
     return all;
   }
 
-  async user() {
+  async login() {
     let token = this.request.token;
     let cache = this.app.find(this.request.socket.remoteAddress)
 
@@ -30,14 +30,15 @@ class BaseHttp extends HttpUtil {
 
     let expirated = this.app.JWT.instance().expiration(user, server);
 
-    if (expirated) return null;
+    if (expirated) {
+      this.app.save(this.request.socket.remoteAddress, { auth: null });
+      return null;
+    }
     else           return server.payload.sub;
   }
 
   async auth() {
-    let token = this.request.token;
-    let jwt   = await this.app.JWT.instance().validate(this.app, token);
-    return jwt;
+    return !!await this.login();
   }
 
   setStatus(code) {

@@ -6,6 +6,7 @@ class Login extends BaseModelSql {
   fields = [
     'id',
     'login',
+    'user_id',
     'senha',
     'created_at',
     'updated_at'
@@ -15,17 +16,22 @@ class Login extends BaseModelSql {
 
   relation = {
     forgotem: require('./Forgotem'),
-    entrycode: require('./Entrycode')
+    entrycode: require('./Entrycode'),
+    user: require('./User')
   }
 
   constructor() { super(); }
 
+  user() {
+    return this.belongsTo(this.relation.user, 'user_id');
+  }
+
   forgotem() {
-    return this.hasMany(this.relation.forgotem, 'login');
+    return this.hasMany(this.relation.forgotem, 'login_id');
   }
 
   entrycode() {
-    return this.hasMany(this.relation.entrycode, 'login');
+    return this.hasMany(this.relation.entrycode, 'login_id');
   }
 }
 

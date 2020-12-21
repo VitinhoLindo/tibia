@@ -11,7 +11,7 @@ import Component from './component.js'
   app.use(store);
   app.use(router);
 
-  await MyApp(app);
+  MyApp(app);
   Component(app);
 
   app.mount('#app');

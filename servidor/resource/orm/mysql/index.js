@@ -73,8 +73,12 @@ class OrmMysql extends Model {
     return model.join(arg);
   }
 
-  belongsTo(model, field) {
-    return model.find(this[field]);
+  async belongsTo(model, field) {
+    try {
+      return await model.find(this[field]);
+    } catch (error) {
+      return null;
+    }
   }
 
   belongsToMany(model, field) {
@@ -130,8 +134,17 @@ class OrmMysql extends Model {
   }
 
   async save() {
-    let [query, data] = this.build.updateQuery(this.table, this.toJSON(), this.timestamp);
-    await this.client.executeQuery(query);
+    let data = this.toJSON();
+    let query     = '';
+
+    if (data.id)
+      query = this.build.updateQuery(this.table, data, this.timestamp);
+    else 
+      query = this.build.insertQuery(this.table, data, this.timestamp);
+
+    let result = await this.client.executeQuery(query);
+    if (!data.id) 
+      data.id = result.insertId;
     for(let key in data) this[key] = data[key];
     return this;
   }

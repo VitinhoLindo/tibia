@@ -22,7 +22,10 @@ module.exports = function (app = require('../index')(), server = require('expres
     .listen();
 
   server.use(app.bodyparser.urlencoded({ extended: true }));
-  server.use(app.bodyparser.json());
+
+  try {
+    server.use(app.bodyparser.json({ limit: app.process.env.LIMIT_REQUEST_LENGTH }));
+  } catch (error) { }
   server.use((i, s, n) => middlaware.validate(i, s, n));
 
   for(let api of Api) server.use(api.route, api.use);

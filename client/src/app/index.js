@@ -4,16 +4,18 @@ class App extends Translate {
   constructor() { super(); }
 
   async build() {
-    await this.getLanguages();
-    await this.setLanguage(this.get('language') || this.navigatorLanguage());
+    this.getLanguages();
+    this.setLanguage(this.get('language') || this.navigatorLanguage());
     await this.sync();
+    await this.authentication();
+    this.emit('app-loading-end');
   }
 }
 
-export default async function (Vue) {
+export default function (Vue) {
   let app = new App(Vue);
 
-  await app.build();
+  app.build();
 
   Vue.config.globalProperties.$app = app;
 }

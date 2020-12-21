@@ -15,7 +15,7 @@ class Model {
 
     for(let key of Object.keys(this)) {
       if (keys.indexOf(key) >= 0) continue;
-      json[key] = this[key] || null;
+      if (this[key]) json[key] = this[key];
     }
 
     return json;

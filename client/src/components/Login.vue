@@ -215,6 +215,7 @@ export default {
       });
     },
     async sendToForgotem() {
+      this.loading(true);
       this.buttonListen(true);
 
       let data = {
@@ -233,21 +234,20 @@ export default {
         this.clearError();
         let { status, code, message, result } = await this.callForgotem(data);
 
+        this.loading(false);
+        this.buttonListen(false);
         if (status == 'error') {
           if (result.error) {
             for(let field in result.error) {
               if (this.values[field])
                 this.values[field].error = result.error[field];
             }
-            this.buttonListen(false);
             return;
           }
           else throw message;
         }
 
-        this.buttonListen(false);
       } catch (error) {
-        this.buttonListen(false);
         return;
       }
 
@@ -261,11 +261,12 @@ export default {
         this.forgotemListen(false);
         this.values.senha.value   = '';
         this.values.senha.confirm = '';
-        this.values.senha.code    = '';
+        this.values.code.value    = '';
         this.loginListen(true);
       }
     },
     async singIn() {
+      this.loading(true);
       this.buttonListen(true);
       this.clearError();
 
@@ -288,13 +289,15 @@ export default {
           encrypt: true
         });
 
+        this.loading(false);
+        this.buttonListen(false)
         if (status == 'error') {
           if (result.error) {
             for(let field in result.error) {
               if (this.values[field])
                 this.values[field].error = result.error[field];              
             }
-            return this.buttonListen(false);
+            return;
           } else throw message;
         }
 
@@ -306,14 +309,13 @@ export default {
       } catch (error) {
         console.error(error);
       }
-
-      this.buttonListen(false);
     },
     listenEvent(event) {
       switch (event) {
         case 'login-cancel': return this.show();
         case 'login-sing': return this.singIn();
         case 'login-forgotem':
+          this.clearData();
           this.loginListen(false);
           return this.forgotemListen(true);
         case 'forgotem-back':

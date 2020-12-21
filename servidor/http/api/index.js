@@ -3,5 +3,7 @@ module.exports = [
   require('./LoginApi'),
   require('./TranslateApi'),
   require('./ResourceApi'),
-  require('./ForgotemApi')
+  require('./ForgotemApi'),
+  require('./UserApi'),
+  require('./FileApi')
 ];

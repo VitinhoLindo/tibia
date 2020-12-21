@@ -28,7 +28,7 @@ class LoginController extends LoginService {
       try {
         all = await this.ecp_dcp_value(all, 'decrypt');
       } catch (error) {
-        throw { code: 500, message: 'failure in decrypt or encrypt data', result: { expiredCrypto: true } };        
+        throw { code: 500, message: 'failure in decrypt or encrypt data', result: { expiredCrypto: true } };
       }
       
       let validator = this.Validator.make({

@@ -58,6 +58,11 @@ class Util extends Modules {
 
     return randomString;
   }
+
+  extractNumber(value) {
+    let numbers = value.replace(/[^\d]+/g, '');
+    return numbers;
+  }
 }
 
 module.exports = Util;

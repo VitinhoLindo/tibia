@@ -128,10 +128,7 @@ class JWT extends Variables {
         else return true;
       } else {
         if (certificate != _certificate) return null;
-        let certificated = await this.app.decrypt(certificate);
-        let [_header, _payload] = certificated.split('.');
-
-        return ValidatorResponse.instance(header, payload, { header: _header, payload: _payload });
+        return ValidatorResponse.instance(header, payload, { header: header, payload: payload });
       }
     } catch (error) {
       return (extract) ? null: false;
