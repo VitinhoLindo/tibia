@@ -20,10 +20,10 @@ class ResourceService extends Base {
     for(let resource of this.resources) {
       let resourceModel = resource.make(this.request, this.response);
 
-      if (resourceModel.autentication == false) {
+      if (resourceModel.authentication == false) {
         authentication.push(resourceModel);
       }
-      else if (!!login == resourceModel.autentication) {
+      else if (!!login == resourceModel.authentication) {
         authentication.push(resourceModel);
       }
     }
@@ -32,8 +32,8 @@ class ResourceService extends Base {
      * user authorizated
      */
     for(let resource of authentication) {
-      if (resource.policie.view(user)) {
-        resources.push(resource);
+      if (resource.police.link(user)) {
+        resources.push(resource.getPage());
       }
     }
     

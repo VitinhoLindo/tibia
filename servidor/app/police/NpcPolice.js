@@ -1,15 +1,15 @@
 const BasePolice = require('./BasePolice');
 
 class NpcPolice extends BasePolice {
-  static autorization = require('../UserAuthorization');
+  static authorization = require('../UserAuthorization');
 
   constructor() { super(); }
 
-  static insert(user, model) {
+  static link(user) {
     try {
       if (
-        user.user_authorization_id == this.autorization.ID_ADMIN ||
-        user.user_authorization_id == this.autorization.ID_MODERATOR
+        user.user_authorization_id == this.authorization.ID_ADMIN ||
+        user.user_authorization_id == this.authorization.ID_MODERATOR
       ) return true;
     } catch (error) { }
     return false;
@@ -25,7 +25,7 @@ class NpcPolice extends BasePolice {
     return false;
   }
 
-  static delete(user, model) { 
+  static insert(user, model) {
     try {
       if (
         user.user_authorization_id == this.autorization.ID_ADMIN ||
@@ -36,6 +36,16 @@ class NpcPolice extends BasePolice {
   }
 
   static update(user, model) {
+    try {
+      if (
+        user.user_authorization_id == this.autorization.ID_ADMIN ||
+        user.user_authorization_id == this.autorization.ID_MODERATOR
+      ) return true;
+    } catch (error) { }
+    return false;
+  }
+
+  static delete(user, model) { 
     try {
       if (
         user.user_authorization_id == this.autorization.ID_ADMIN ||

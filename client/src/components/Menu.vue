@@ -17,19 +17,17 @@
         class="btn" 
         v-for="(panel, index) in panels"
         v-bind:key="index"
-        v-on:click="openForm(panel.resource)"
+        v-on:click="(event) => openForm(event, panel.resource)"
       >{{ labels[panel.singular] }}</button>
-
-      <button 
-        v-if="auth" 
-        class="btn" 
-        v-on:click="openForm('system-user')"
-      >{{ labels['LABEL_USER_RESOURCE'] }}</button>
 
       <button 
         v-if="!auth" 
         class="btn" 
-        v-on:click="openForm('system-login')"
+        v-on:click="(event) => openForm(event, {
+          resource: 'system-login',
+          singular: 'LOGIN-APP-LABEL',
+          plural: 'LOGIN-APP-LABEL'
+        })"
       >{{ labels['LOGIN-APP-LABEL'] }}</button>
 
     </div>
@@ -55,6 +53,11 @@ export default {
       type: Boolean,
       required: true,
       default: false
+    },
+    user: {
+      type: Object,
+      required: false,
+      default: null
     }
   },
   components: {
@@ -88,30 +91,17 @@ export default {
     menushow(event) {
       this.show = !this.show;
     },
-    openForm(resource) {
-      this.show = false;
-      this.$app.emit(resource);
-    },
     callbackListen(err, pid) {
       if (err) return console.error(err);
       this.addListener({ listiner: this.menuTag, pid: pid });
     },
     async setSrc() {
-      let { message, code, result, status } = await this.$app.request({
-        url: '/user',
-        method: 'get',
-        params: { profile: true, cpf: false }
-      });
+      if (!this.user) return;
+      if (!this.user.profile) return;
 
-      let buffer = await this.$app.hexToBinary(result.profile.binary);
-
-      try {
-        this.src = `data:${result.profile.mimeType};base64,${this.$app.binaryToBase64(new Uint8Array(buffer))}`
-        console.log(this.src);
-        
-      } catch (error) {
-        console.error(error);
-      }
+      let buffer = this.$app.hexToBinary(this.user.profile.binary);
+      let base64 = this.app.binaryToBase64(new Uint8Array(buffer));
+      this.src = `data:${result.profile.mimeType};base64,${base64}`;
     }
   }
 }

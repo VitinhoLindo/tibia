@@ -24,6 +24,10 @@ export default {
     },
     loading(bool = false, message = '') {
       this.$app.emit('loading', { on: bool, message: '' });
+    },
+    openForm(event, resource) {
+      this.$app.emit('form', { target: event, data: resource })
+      this.$app.emit(resource);
     }
   }
 }

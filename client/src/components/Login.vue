@@ -1,5 +1,5 @@
 <template>
-  <div v-if="on" class="login">
+  <div class="login">
 
     <!-- content login -->
     <div class="content-login" v-if="controller.login && !controller.code">
@@ -39,7 +39,7 @@
         <!-- content login forgotem -->
         <div class="field">
           <div class="content">
-            <a href="#" v-on:click="listenEvent('login-forgotem')">{{ labels['LOGIN-FORGOTEM-LABEL'] }}</a>
+            <a href="#" v-on:click="(event) => listenEvent(event, 'login-forgotem')">{{ labels['LOGIN-FORGOTEM-LABEL'] }}</a>
           </div>
         </div>
 
@@ -47,10 +47,10 @@
 
       <!-- listen login -->
       <div class="buttons">
-        <button  class="btn-danger" v-on:click="listenEvent('login-cancel')" v-bind:disabled="button.locked">
+        <button  class="btn-danger" v-on:click="(event) => listenEvent(event, 'login-cancel')" v-bind:disabled="button.locked">
           {{ labels['CANCEL-LABEL'] }}
         </button>
-        <button class="btn-frist" v-on:click="listenEvent('login-sing')" v-bind:disabled="button.locked">
+        <button class="btn-frist" v-on:click="(event) => listenEvent(event, 'login-sing')" v-bind:disabled="button.locked">
           {{ labels['SING-LABEL'] }}
         </button>
       </div>
@@ -115,10 +115,10 @@
 
       <!-- listen forgotem -->
       <div class="buttons">
-        <button class="btn-danger" v-on:click="listenEvent('forgotem-back')" v-bind:disabled="button.locked">
+        <button class="btn-danger" v-on:click="(event) => listenEvent(event, 'forgotem-back')" v-bind:disabled="button.locked">
           {{ labels['BACK-LABEL'] }}
         </button>
-        <button class="btn-frist" v-on:click="listenEvent('forgotem-submit')" v-bind:disabled="button.locked">
+        <button class="btn-frist" v-on:click="(event) => listenEvent(event, 'forgotem-submit')" v-bind:disabled="button.locked">
           {{ labels['SUBMIT-LABEL'] }}
         </button>
       </div>
@@ -147,10 +147,10 @@
 
       <!-- listen login -->
       <div class="buttons">
-        <button class="btn-danger" v-if="controller.codebtn" v-on:click="listenEvent('login-cancel')" v-bind:disabled="button.locked">
+        <button class="btn-danger" v-if="controller.codebtn" v-on:click="(event) => listenEvent(event, 'login-cancel')" v-bind:disabled="button.locked">
           {{ labels['CANCEL-LABEL'] }}
         </button>
-        <button class="btn-frist" v-on:click="listenEvent('login-sing')" v-bind:disabled="button.locked">
+        <button class="btn-frist" v-on:click="(event) => listenEvent(event, 'login-sing')" v-bind:disabled="button.locked">
           {{ labels['SING-LABEL'] }}
         </button>
       </div>
@@ -165,12 +165,6 @@ import LangMixin from '../mixins/langmixin';
 export default {
   name: 'Login',
   mixins: [BaseMixin, LangMixin],
-  mounted () {
-    this.$app.on(this.loginTag, this.show, this.langCallback);
-  },
-  unmounted() {
-    this.removeListener({ listiner: this.loginTag });
-  },
   data () {
     return {
       on: false,
@@ -305,14 +299,19 @@ export default {
         else {
           this.$app.authentication(result.auth);
           this.clearData();
+          return this.openForm(event, {
+            resource: ''
+          });
         }
       } catch (error) {
         console.error(error);
       }
     },
-    listenEvent(event) {
-      switch (event) {
-        case 'login-cancel': return this.show();
+    listenEvent(event, listen) {
+      switch (listen) {
+        case 'login-cancel': return this.openForm(event, {
+          resource: ''
+        });
         case 'login-sing': return this.singIn();
         case 'login-forgotem':
           this.clearData();
@@ -325,9 +324,6 @@ export default {
         default:
           return;
       }
-    },
-    show() {
-      this.on = !this.on;
     },
     loginCallback(err, pid) {
       if (err) return console.error(err);

@@ -99,7 +99,7 @@ class Request extends Crypto {
       }
 
       if (data.result.authentication) {
-        this.authentication();
+        return this.authentication();
       }
 
       if (option.encrypt) {

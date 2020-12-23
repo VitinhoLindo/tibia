@@ -11,19 +11,19 @@ class LoginService extends Base {
 
   async sendLoginCode(email, code) {
     try {
-      await this.app.sendMail({
-        from: email,
-        subject: 'Solicitação de login',
-        text: '',
-        html: '',
-        fileContent: 'utf8',
-        replace: {
-          type: 'html',
-          regexp: '@code@',
-          value: code
-        },
-        pathFile: this.app.path.publicMailerDir('loginCode.html')
-      });
+      // await this.app.sendMail({
+      //   from: email,
+      //   subject: 'Solicitação de login',
+      //   text: '',
+      //   html: '',
+      //   fileContent: 'utf8',
+      //   replace: {
+      //     type: 'html',
+      //     regexp: '@code@',
+      //     value: code
+      //   },
+      //   pathFile: this.app.path.publicMailerDir('loginCode.html')
+      // });
     } catch (error) {
       throw { code: 500, message: 'failure in send e-mail', result: { error: { login: 'failure in send e-mail' } } }
     }

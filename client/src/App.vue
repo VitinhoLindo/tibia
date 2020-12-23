@@ -1,10 +1,8 @@
 <template>
   <div>
-    <menu-site v-bind:auth="auth" />
+    <menu-site v-bind:auth="auth" v-bind:user="user" />
 
     <app-loading />
-    <perfil-app v-if="auth" />
-    <login-app v-if="!auth" />
 
     <div class="content-app">
       <router-view />
@@ -27,6 +25,7 @@ export default {
   data() {
     return {
       auth: false,
+      user: null,
       appTag: 'authentication',
       loadTag: 'app-loading-end'
     }
@@ -42,6 +41,24 @@ export default {
   methods: {
     authenticated(auth) {
       this.auth = auth;
+      this.getUser();
+    },
+    async getUser(data) {
+      if (!this.auth) return;
+      this.loading(true);
+
+      if (!data) {
+        let { code, message, result, status } = await this.$app.request({
+          url: '/user',
+          method: 'get'
+        });
+
+        this.user = result;
+      } else {
+        this.user = data;
+      }
+
+      this.loading(false);
     },
     appLoaded() {
       this.$app.emit('loading', { on: false, message: '' });
@@ -221,6 +238,14 @@ body,
   font-size: 12px;
   padding: 2.5px;
   color: #e74c3c;
+}
+
+.fields .buttons {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media only screen and (max-width: 768px) {

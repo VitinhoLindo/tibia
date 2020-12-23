@@ -1,12 +1,6 @@
 <template>
   <div class="home">
-    <!-- <h1>{{ labels['ABOUT-H1-LABEL'] }}</h1>
-
-    <h4>{{ labels['ABOUT-SUPORT-LABEL'] }}</h4>
-
-    <ul>
-      <li>Benkz</li>
-    </ul> -->
+    <component v-if="form" v-bind:is="form"></component>
   </div>
 </template>
 
@@ -16,7 +10,28 @@ import LangMixin from '../mixins/langmixin'
 
 export default {
   name: 'Home',
-  mixins: [BaseMixin, LangMixin]
+  mixins: [BaseMixin, LangMixin],
+  data () {
+    return {
+      tagName: 'form',
+      form: ''
+    }
+  },
+  mounted () {
+    this.$app.on(this.tagName, this.onForm, this.listenCallback);
+  },
+  unmounted() {
+    this.removeListener({ listener: this.tagName });
+  },
+  methods: {
+    onForm(event) {
+      this.form = event.data.resource;
+    },
+    listenCallback(err, pid) {
+      if (err) return console.error(err);
+      this.addListener({ listener: this.tagName, pid: pid });
+    }
+  }
 }
 </script>
 

@@ -5,8 +5,8 @@
       <div class="label">{{ labels['PERFIL-APP-LABEL'] }}</div>
       
       <!-- complement login email [info, error] -->
-      <div class="fields">
-        <div class="field">
+      <form class="fields" @submit="(event) => savePerfil(event)">
+        <!-- <div class="field">
           <div class="content">
             <label> {{ labels['CPF-LABEL'] }} </label>
             <input  type="text" v-model="values.cpf.value" @input="cpfChange" v-bind:placeholder="labels['CPF-LABEL']" >
@@ -16,15 +16,17 @@
             <div class="info" v-if="values.cpf.info">{{ values.cpf.info }}</div>
             <div class="error" v-if="values.cpf.error">{{ values.cpf.error }}</div>
           </div>
+        </div> -->
+
+        <file-input v-bind:data="values.profile" v-bind:label="'IMAGE-LABEL'" v-bind:form="perfilTag" v-on:onInputFile="fileChange" />
+
+        <div class="buttons">
+          <button v-for="(btn, index) in buttons" v-bind:class="btn.class" v-bind:value="btn.value + '-' + index" v-bind:key="index">
+            {{ labels[btn.label] }}
+          </button>
         </div>
+      </form>
 
-        <file-input v-bind:data="values.profile" v-bind:form="perfilTag" v-on:onInputFile="fileChange" />
-      </div>
-
-      <div class="buttons">
-        <button class="btn btn-danger" v-on:click="perfilListen()">{{ labels['CANCEL-LABEL'] }}</button>
-        <button class="btn btn-frist" v-on:click="(event) => savePerfil(event)">{{ labels['SAVE-LABEL'] }}</button>
-      </div>
     </div>
 
   </div>
@@ -37,6 +39,7 @@ import LangMixin from '../mixins/langmixin'
 export default {
   name: 'Perfil',
   mixins: [BaseMixin, LangMixin],
+  props: ['user'],
   mounted() {
     this.$app.on(this.perfilTag, this.perfilListen, this.listenCallback);
   },
@@ -48,91 +51,60 @@ export default {
       perfilTag: 'system-user',
       on: false,
       values: {
-        cpf: {
-          value: '',
-          info: '',
-          error: ''
-        },
         profile: {
           value: null,
           type: 'image',
           info: '',
           error: ''
         }
-      }
+      },
+      buttons: [
+        { class: 'btn btn-danger', value: 'cancel', label: 'CANCEL-LABEL', on: this.perfilListen },
+        { class: 'btn btn-frist', value: 'submit', label: 'SAVE-LABEL' }
+      ]
     }
   },
   methods: {
-    cpfChange(event) {
-      if (this.values.cpf.value.length < 11) return;
-      let exec = /\.|\-/g.exec(this.values.cpf.value);
-      if (exec) return;
-
-      let nextIndex = 0;
-      let value = '';
-      while(nextIndex < this.values.cpf.value.length) {
-        let string = '';
-
-        if (nextIndex + 3 < this.values.cpf.value.length)
-          string = this.values.cpf.value.substr(nextIndex, 3);
-        else
-          string = this.values.cpf.value.substr(nextIndex);
-        nextIndex += 3;
-
-        if (nextIndex == 3) {
-          value += string;
-        } else if (string.length == 2) {
-          value += `-${string}`;
-        } else {
-          value += `.${string}`;
-        }
-      }
-
-      this.values.cpf.value = value;
-    },
     fileChange(event, data) {
       this.values.profile = data;
     },
-    async savePerfil(event) {
-      this.loading(true);
-      let data = {};
-      
-      for(let key in this.values) 
-        if (key == 'cpf') 
-          data[key] = await this.$app.encrypt(this.values[key].value);
-        else 
-          data[key] = this.values[key].value;
+    async savePerfil(event = new SubmitEvent) {
+      event.preventDefault();
 
-      console.log(data);
+      let [name, index] = event.submitter.value.split('-');
 
-      try {
-        let { code, message, result, status } = await this.$app.request({
-          url: '/user',
-          method: 'post',
-          data: data
-        })
-
-        this.loading(false);
-        if (status == 'error') throw message;
-      } catch (error) {
-        console.error(error);
+      switch (name) {
+        case 'cancel':
+          if (this.buttons[parseInt(index)].on) this.buttons[parseInt(index)].on();
+          return;
       }
+      // v-on:click="perfilListen()"
+      console.log(event);
+      // this.loading(true);
+      // let data = {};
+      
+      // for(let key in this.values) 
+      //   data[key] = this.values[key].value;
+
+      // try {
+      //   let { code, message, result, status } = await this.$app.request({
+      //     url: '/user',
+      //     method: 'post',
+      //     data: data
+      //   })
+
+      //   if (status == 'error') throw message;
+
+      //   this.$emit('user-changed', { event: event, data: result });
+      // } catch (error) {
+      //   console.error(error);
+      // }
+
+      // this.loading(false);
     },
     async getData() {
-      this.loading(true);
-      let { code, message, result, status } = await this.$app.request({
-        url: '/user',
-        method: 'get'
-      });
-
-      for(let key in result) {
-        if (key == 'cpf')
-          result[key] = await this.$app.decrypt(result[key]);
-        this.values[key].value = result[key];
-      }
-      this.cpfChange();
-
-      this.loading(false);
+      for(let key in this.user)
+        this.values[key].value = this.user[key];
     },
     async perfilListen() {
       if (!this.on) await this.getData();

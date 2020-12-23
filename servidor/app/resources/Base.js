@@ -2,11 +2,11 @@ const BaseHttp = require('../../resource/http/BaseHttp')
 
 class Base extends BaseHttp {
   model         = null;
-  autentication = false;
+  authentication = false;
   police        = require('../police/BasePolice');
 
   page = { 
-    class: 'form-table',
+    resource: 'panel-forms',
     singular: '',
     plural: ''
   };
@@ -16,9 +16,10 @@ class Base extends BaseHttp {
   }
 
   changeClass(value) {
-    let classes = ['form-table', 'form-itens'];
+    let resource = ['panel-forms', 'form-table', 'form-itens'];
 
-    if (classes.indexOf(value) >= 0) this.page.class = value;
+    if (resource.indexOf(value) in resource) 
+      this.page.resource = value;
   }
 
   singularLabel(value = '') {

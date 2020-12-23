@@ -22,6 +22,17 @@
   "DECRYPT-LABEL": "decriptando",
   "SYNC-RSA-LABEL": "sincronizando chave assimetrica",
 
+  "USER_SINGULAR_LABEL": "Usuário",
+  "USER_PLURAL_LABEL": "Usuários",
+
+  "NPC_SINGULAR_LABEL": "Npc",
+  "NPC_PLURAL_LABEL": "Npcs",
+
+  "CREATE_LABEL": "Criar",
+  "UPDATE_LABEL": "Editar",
+  "DELETE_LABEL": "Remover",
+  "SELECT_LABEL": "Visualizar",
+
   "BACK-LABEL": "voltar",
   "SUBMIT-LABEL": "enviar",
   "SAVE-LABEL": "Salvar",
@@ -33,5 +44,4 @@
   
   "ABOUT-H1-LABEL": "Devido respeito aos players que ajudaram na criação deste site",
   "ABOUT-SUPORT-LABEL": "Grande prazer de ter o nome de cada um deles aqui"
-
 }

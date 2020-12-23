@@ -160,10 +160,11 @@ module.exports = {
     content: `const BasePolice = require('./BasePolice');\n\n` +
              `class @policename@ extends BasePolice {\n\n` +
              `  constructor() { super(); }\n\n` +
-             `  static insert(user, model) { return true; }\n\n` +
+             `  static link  (user)        { return true; }\n\n` +
              `  static view  (user, model) { return true; }\n\n` +
-             `  static delete(user, model) { return true; }\n\n` +
+             `  static insert(user, model) { return true; }\n\n` +
              `  static update(user, model) { return true; }\n\n` +
+             `  static delete(user, model) { return true; }\n\n` +
              `}\n\n` +
              `module.exports = @policename@;`
   }

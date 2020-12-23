@@ -30,7 +30,7 @@ export default {
     }
   },
   mounted () {
-    if (!this.data.value.binary) return;
+    if (!this.data.value) return;
 
     let buffer = this.$app.hexToBinary(this.data.value.binary);
     this.readSrc(new Blob([new Uint8Array(buffer)], { type: this.data.value.mimeType, name: this.data.value.name }));
