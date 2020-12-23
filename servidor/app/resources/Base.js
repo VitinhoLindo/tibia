@@ -1,30 +1,18 @@
 const BaseHttp = require('../../resource/http/BaseHttp')
 
 class Base extends BaseHttp {
-  model = null;
+  model         = null;
   autentication = false;
+  police        = require('../police/BasePolice');
 
   page = { 
     class: 'form-table',
     singular: '',
-    plural: '',
-    resource: ''
+    plural: ''
   };
 
   constructor(request, response) {
     super(request, response);
-    this.build();
-  }
-
-  build() {
-    let singular = this.constructor.name;
-    this.page.resource = this.constructor.name.toLowerCase();
-    singular = `${singular[0].toUpperCase()}${singular.substr(1).toLowerCase()}`;
-    let plural = singular;
-
-
-    this.page.singular = singular;
-    this.page.plural   = plural;
   }
 
   changeClass(value) {

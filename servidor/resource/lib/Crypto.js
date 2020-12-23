@@ -1,9 +1,15 @@
 const CryptoUtil = require('./CryptoUtil');
 
 class Crypto extends CryptoUtil {
-  key = {
-    pass: '',
-    iv: null
+  keys = {
+    server: {
+      secret: '',
+      key   : null
+    },
+    jwt: {
+      secret: '',
+      key   : null
+    }
   }
 
   constructor() { super(); }
@@ -13,45 +19,109 @@ class Crypto extends CryptoUtil {
   }
 
   readKey() {
-    let key = this.process.env.KEY;
-    let iv  = this.process.env.IV;
+    let serversecret = this.process.env.SECRET;
+    let serverkey    = this.process.env.KEY;
+    let jwtsecret    = this.process.env.JWT_SECRET;
+    let jwtkey       = this.process.env.JWT_KEY;
 
-    if (!key || !iv) throw 'please execute command \'node make --set=env\' to configure \'KEY\' and \'IV\'';
+    if (
+      !serversecret || 
+      !serverkey    ||
+      !jwtsecret    ||
+      !jwtkey
+    ) throw 'please execute command \'node make --set=env\' to configure \'KEY\' and \'IV\'';
 
-    this.key.pass = key;
-    this.key.iv   = Buffer.from(iv, 'hex');
+    this.keys = {
+      server: {
+        secret: serversecret,
+        key   : Buffer.from(serverkey, 'hex')
+      },
+      jwt   : {
+        secret: jwtsecret,
+        key   : Buffer.from(jwtkey, 'hex')
+      }
+    }
   }
 
-  generateKey() {
-    return this.crypto.scryptSync(
-      this.key.pass,
-      this.salt,
-      this.saltRange
-    )
+  getScrypt(type = 'server') {
+    if (type == 'jwt') {
+      return this.crypto.scryptSync(
+        this.keys.jwt.secret,
+        this.salt,
+        this.saltRange
+      )
+    } else {
+      return this.crypto.scryptSync(
+        this.keys.server.secret,
+        this.salt,
+        this.saltRange
+      );
+    }
   }
 
-  getEncrypt() {
-    return this.crypto.createCipheriv(this.encryptCipher, this.generateKey(), this.key.iv);
+  getCipher(type = 'server') {
+    if (type == 'jwt') {
+      return this.crypto.createCipheriv(
+        this.encryptCipher,
+        this.getScrypt(type),
+        this.keys.jwt.key
+      );
+    } else {
+      return this.crypto.createCipheriv(
+        this.encryptCipher,
+        this.getScrypt(),
+        this.keys.server.key
+      );
+    }
   }
 
-  getDecrypt() {
-    return this.crypto.createDecipheriv(this.encryptCipher, this.generateKey(), this.key.iv);
+  getDecipher(type = 'server') {
+    if (type == 'jwt') {
+      return this.crypto.createDecipheriv(
+        this.encryptCipher,
+        this.getScrypt(type),
+        this.keys.jwt.key
+      )
+    } else {
+      return this.crypto.createDecipheriv(
+        this.encryptCipher,
+        this.getScrypt(),
+        this.keys.server.key
+      );
+    }
   }
 
-  encrypt(value) {
-    let chiper = this.getEncrypt(), encrypted = '';
+  format(type = 'encrypt', args = { type: 'server', format: 'utf8', toFormat: 'hex' }) {
+    if (type == 'encrypt') {
+      if (!args.type)     args.type     = 'server';
+      if (!args.format)   args.format   = 'utf8';
+      if (!args.toFormat) args.toFormat = 'hex';
+      return args;
+    }
+    if (type == 'decrypt') {
+      if (!args.type)     args.type     = 'server';
+      if (!args.format)   args.format   = 'hex';
+      if (!args.toFormat) args.toFormat = 'utf8';
+      return args;
+    }
+  }
 
-    encrypted += chiper.update(value, 'utf8', 'hex');
-    encrypted += chiper.final('hex');
+  encrypt(value, arg = { type: 'server', format: 'utf8', toFormat: 'hex' }) {
+    arg = this.format('encrypt');
+    let chiper = this.getCipher(arg.type), encrypted = '';
+
+    encrypted += chiper.update(value, arg.format, arg.toFormat);
+    encrypted += chiper.final(arg.toFormat);
 
     return encrypted;
   }
 
-  decrypt(value) {
-    let dechiper = this.getDecrypt(), decrypted = '';
+  decrypt(value, arg = { type: 'server', format: 'hex', toFormat: 'utf8' }) {
+    arg = this.format('decrypt');
+    let dechiper = this.getDecipher(arg.type), decrypted = '';
 
-    decrypted += dechiper.update(value, 'hex', 'utf8');
-    decrypted += dechiper.final('utf8');
+    decrypted += dechiper.update(value, arg.format, arg.toFormat);
+    decrypted += dechiper.final(arg.toFormat);
 
     return decrypted;
   }
@@ -62,10 +132,7 @@ class Crypto extends CryptoUtil {
       hash: this.hashAlgorithm,
       modulusLength: this.modulusLength,
       publicExponent: this.publicExponent
-    }, 
-    true, 
-    ['encrypt', 'decrypt']
-    );
+    }, true, ['encrypt', 'decrypt']);
 
     return { publicKey, privateKey };
   }

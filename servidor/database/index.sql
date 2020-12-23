@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `tibia` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE IF NOT EXISTS `tibia` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `tibia`;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -12,44 +12,25 @@ USE `tibia`;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-DROP TABLE IF EXISTS `login`;
-CREATE TABLE `login` (
-	`id` BIGINT AUTO_INCREMENT,
-  `nick` LONGTEXT,
-  `email` LONGTEXT NOT NULL,
-  `senha` LONGTEXT NOT NULL,
-  `user_id` BIGINT,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME,
-  PRIMARY KEY(`id`),
-  FOREIGN KEY(`user_id`) REFERENCES `user`(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-DROP TABLE IF EXISTS `forgotem`;
-CREATE TABLE `forgotem` (
-	`id` BIGINT AUTO_INCREMENT,
-  `login_id` BIGINT NOT NULL,
-  `code` LONGTEXT NOT NULL,
-  `usaged_at` DATETIME,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME,
-  PRIMARY KEY(`id`),
-  FOREIGN KEY(`login_id`) REFERENCES `login`(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-DROP TABLE IF EXISTS `entrycode`;
-CREATE TABLE `entrycode` (
-	`id` BIGINT AUTO_INCREMENT,
-  `login_id` BIGINT NOT NULL,
-  `code` LONGTEXT NOT NULL,
-  `usaged_at` DATETIME,
-  `created_at` DATETIME NOT NULL,
-  `updated_at` DATETIME,
-  PRIMARY KEY(`id`),
-  FOREIGN KEY(`login_id`) REFERENCES `login`(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 DROP TABLE IF EXISTS `file`;
+DROP TABLE IF EXISTS `user_authorization`;
+DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `login`;
+DROP TABLE IF EXISTS `forgotem`;
+DROP TABLE IF EXISTS `entrycode`;
+DROP TABLE IF EXISTS `server`;
+DROP TABLE IF EXISTS `person`;
+DROP TABLE IF EXISTS `section`;
+DROP TABLE IF EXISTS `location`;
+DROP TABLE IF EXISTS `npc`;
+DROP TABLE IF EXISTS `item`;
+DROP TABLE IF EXISTS `npc_buy`;
+DROP TABLE IF EXISTS `npc_sell`;
+DROP TABLE IF EXISTS `section_item`;
+DROP TABLE IF EXISTS `access`;
+DROP TABLE IF EXISTS `npc_access`;
+DROP TABLE IF EXISTS `person_access`;
+
 CREATE TABLE `file` (
 	`id` BIGINT AUTO_INCREMENT,
   `name` LONGTEXT NOT NULL,
@@ -61,29 +42,61 @@ CREATE TABLE `file` (
   PRIMARY KEY(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `user`;
+
 CREATE TABLE `user` (
 	`id` BIGINT AUTO_INCREMENT,
-  `cpf` LONGTEXT NOT NULL,
   `profile_id` BIGINT,
+  `user_authorization_id` BIGINT NOT NULL,
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME,
   PRIMARY KEY(`id`),
   FOREIGN KEY(`profile_id`) REFERENCES `file`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `server`;
+CREATE TABLE `login` (
+	`id` BIGINT AUTO_INCREMENT,
+  `nick` LONGTEXT,
+  `email` LONGTEXT NOT NULL,
+  `senha` LONGTEXT NOT NULL,
+  `user_id` BIGINT NOT NULL,
+  `created_at` DATETIME NOT NULL,
+  `updated_at` DATETIME,
+  PRIMARY KEY(`id`),
+  FOREIGN KEY(`user_id`) REFERENCES `user`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `forgotem` (
+	`id` BIGINT AUTO_INCREMENT,
+  `login_id` BIGINT NOT NULL,
+  `code` LONGTEXT NOT NULL,
+  `usaged_at` DATETIME,
+  `created_at` DATETIME NOT NULL,
+  `updated_at` DATETIME,
+  PRIMARY KEY(`id`),
+  FOREIGN KEY(`login_id`) REFERENCES `login`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `entrycode` (
+	`id` BIGINT AUTO_INCREMENT,
+  `login_id` BIGINT NOT NULL,
+  `code` LONGTEXT NOT NULL,
+  `usaged_at` DATETIME,
+  `created_at` DATETIME NOT NULL,
+  `updated_at` DATETIME,
+  PRIMARY KEY(`id`),
+  FOREIGN KEY(`login_id`) REFERENCES `login`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 CREATE TABLE `server` (
 	`id` BIGINT AUTO_INCREMENT,
   `name` VARCHAR(220) NOT NULL,
-  `color` VARCHAR(220) NOT NULL,
+  `location` VARCHAR(220) NOT NULL,
   `pvp` VARCHAR(220) NOT NULL,
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME,
   PRIMARY KEY(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `person`;
 CREATE TABLE `person` (
 	`id` BIGINT AUTO_INCREMENT,
   `user_id` BIGINT NOT NULL,
@@ -96,7 +109,6 @@ CREATE TABLE `person` (
   FOREIGN KEY(`server_id`) REFERENCES `server`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `section`;
 CREATE TABLE `section` (
 	`id` BIGINT AUTO_INCREMENT,
   `person_id` BIGINT NOT NULL,
@@ -109,7 +121,6 @@ CREATE TABLE `section` (
   FOREIGN KEY(`person_id`) REFERENCES `person`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `location`;
 CREATE TABLE `location` (
 	`id` BIGINT AUTO_INCREMENT,
   `name` VARCHAR(220) NOT NULL,
@@ -118,7 +129,6 @@ CREATE TABLE `location` (
   PRIMARY KEY(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `npc`;
 CREATE TABLE `npc` (
 	`id` BIGINT AUTO_INCREMENT,
   `profile_id` BIGINT NOT NULL,
@@ -131,7 +141,6 @@ CREATE TABLE `npc` (
   FOREIGN KEY(`location_id`) REFERENCES `location`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `item`;
 CREATE TABLE `item` (
 	`id` BIGINT AUTO_INCREMENT,
   `image_id` BIGINT NOT NULL,
@@ -142,7 +151,6 @@ CREATE TABLE `item` (
   FOREIGN KEY(`image_id`) REFERENCES `file`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `npc_buy`;
 CREATE TABLE `npc_buy` (
 	`id` BIGINT AUTO_INCREMENT,
   `npc_id` BIGINT NOT NULL,
@@ -155,7 +163,6 @@ CREATE TABLE `npc_buy` (
   FOREIGN KEY(`item_id`) REFERENCES `item`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `npc_sell`;
 CREATE TABLE `npc_sell` (
 	`id` BIGINT AUTO_INCREMENT,
   `npc_id` BIGINT NOT NULL,
@@ -168,7 +175,6 @@ CREATE TABLE `npc_sell` (
   FOREIGN KEY(`item_id`) REFERENCES `item`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `section_item`;
 CREATE TABLE `section_item` (
 	`id` BIGINT AUTO_INCREMENT,
   `section_id` BIGINT NOT NULL,
@@ -182,7 +188,6 @@ CREATE TABLE `section_item` (
   FOREIGN KEY(`item_id`) REFERENCES `item`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `access`;
 CREATE TABLE `access` (
   `id` BIGINT AUTO_INCREMENT,
   `name` VARCHAR(220) NOT NULL,
@@ -191,7 +196,6 @@ CREATE TABLE `access` (
   PRIMARY KEY(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `npc_access`;
 CREATE TABLE `npc_access` (
   `id` BIGINT AUTO_INCREMENT,
   `npc_id` BIGINT NOT NULL,
@@ -203,7 +207,6 @@ CREATE TABLE `npc_access` (
   FOREIGN KEY(`access_id`) REFERENCES `access`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `person_access`;
 CREATE TABLE `person_access` (
   `id` BIGINT AUTO_INCREMENT,
   `person_id` BIGINT NOT NULL,
@@ -215,9 +218,9 @@ CREATE TABLE `person_access` (
   FOREIGN KEY(`access_id`) REFERENCES `access`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `login` 
-	(`email`, `senha`, `created_at`) VALUES 
-  ('af6b3f25f3775ec9c9b057c35de45b45b420d6afa0efd894c072751d6246922b', 'f603e12ed5c239702e03df708b290029497655a2b83a26d081dce185bbaebb13', '2020-12-15 00:43:00');
+INSERT INTO `user_authorization` (`name`) VALUES ('admin'), ('moderator'), ('user');
+INSERT INTO `user` (`user_authorization_id`, `created_at`) VALUES (1, '2020-12-15 00:43:00');
+INSERT INTO `login` (`email`, `senha`,`user_id`, `created_at`) VALUES ('af6b3f25f3775ec9c9b057c35de45b45b420d6afa0efd894c072751d6246922b', 'f603e12ed5c239702e03df708b290029497655a2b83a26d081dce185bbaebb13', 1, '2020-12-15 00:43:00');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

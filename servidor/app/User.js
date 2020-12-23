@@ -8,6 +8,7 @@ class User extends BaseModelSql {
     'cpf',
     'login_id',
     'profile_id',
+    'user_authorization_id',
     'created_at',
     'updated_at'
   ];
@@ -20,7 +21,8 @@ class User extends BaseModelSql {
 
   relation = {
     login: require('./Login'),
-    file : require('./File')
+    file : require('./File'),
+    authorization: require('./UserAuthorization')
   };
 
   constructor() { super(); }

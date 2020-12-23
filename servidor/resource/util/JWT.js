@@ -103,7 +103,7 @@ class JWT extends Variables {
   async generate(app) {
     let header      = app.stringToBase64(JSON.stringify(this.getHeader()));
     let payload     = app.stringToBase64(JSON.stringify(this.getPayload()));
-    let certificate = await app.encrypt(`${header}.${payload}`);
+    let certificate = app.encrypt(`${header}.${payload}`, { type: 'jwt' });
     return `${header}.${payload}.${Buffer.from(certificate, 'hex').toString('base64')}`;
   }
 
@@ -117,7 +117,7 @@ class JWT extends Variables {
 
     try {
       let [header, payload, certificate] = token.split(/\./g);
-      let _certificate = await app.encrypt(`${header}.${payload}`);
+      let _certificate = app.encrypt(`${header}.${payload}`, { type: 'jwt' });
 
       header      = JSON.parse(app.base64ToString(header));
       payload     = JSON.parse(app.base64ToString(payload));
